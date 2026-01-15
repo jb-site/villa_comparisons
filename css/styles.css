@@ -27,7 +27,8 @@
   /* SPACING & SIZING - Adjust card dimensions here */
   --card-width: 300px;
   --card-gap: 1rem;
-  --card-radius: 8px;
+  /* --card-radius: 8px; */
+  --card-radius: 0;
 }
 
 /* ==========================================================================
@@ -185,6 +186,7 @@ body {
   width: var(--card-width);
   background: var(--color-surface);
   border-radius: var(--card-radius);
+  margin: 0 auto;
   box-shadow: 0 1px 3px rgba(45, 41, 38, 0.08);
   transition: box-shadow 0.25s ease, transform 0.25s ease;
   position: relative;
@@ -523,7 +525,7 @@ body {
     align-items: center;
     gap: 0.5rem;
   }
-  
+
   .sort-label {
     font-size: 0.8125rem;
   }
@@ -540,6 +542,7 @@ body {
   .villas-grid {
     grid-template-columns: 1fr;
     justify-content: center;
+    justify-items: center;
   }
 
   .villa-card {
