@@ -553,12 +553,6 @@ body {
 }
 
 @media (max-width: 360px) {
-  .sort-controls-wrapper {
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
   .sort-controls {
     flex-direction: column;
     width: 100%;
