@@ -163,6 +163,10 @@
       background: #4A6B7A;
     }
 
+    .bg-ft-color {
+      background: #FFF1E5;
+    }
+
     /* Villa Card Styles */
     .villa-card {
       width: 300px;
@@ -272,10 +276,10 @@
 <body>
   <div class="demo-container">
     <div class="demo-header">
-      <h1 class="demo-title">Top 3 Background Options</h1>
-      <p class="demo-subtitle">Warm Sand (now live) • Sand Gradient • Rich Aegean Blue</p>
+      <h1 class="demo-title">Background Options</h1>
+      <p class="demo-subtitle">Warm Sand (now live) • FT Color • Sand Gradient • Rich Aegean Blue</p>
       <div class="demo-instructions">
-        <strong>Current selection:</strong> Warm Sand is now live on the main site. Use the dropdown below to compare with the gradient and blue options.
+        <strong>Current selection:</strong> Warm Sand is now live on the main site. Use the dropdown below to compare with other background options including FT Color.
       </div>
     </div>
 
@@ -285,6 +289,7 @@
       <div class="selector-wrapper">
         <select id="backgroundSelector" class="background-selector">
           <option value="warm-sand" selected>Warm Sand (#F2EBE1) — Now Live ✓</option>
+          <option value="ft-color">FT Color (#FFF1E5)</option>
           <option value="sand-gradient">Vertical Sand Gradient</option>
           <option value="rich-aegean">Rich Aegean Blue (#4A6B7A)</option>
         </select>
@@ -313,6 +318,12 @@
         color: '#F2EBE1',
         description: 'Now live on main site',
         className: 'bg-warm-sand'
+      },
+      'ft-color': {
+        title: 'FT Color',
+        color: '#FFF1E5',
+        description: 'Financial Times color',
+        className: 'bg-ft-color'
       },
       'sand-gradient': {
         title: 'Vertical Sand Gradient',
