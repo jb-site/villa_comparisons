@@ -131,7 +131,7 @@
       "per family calc": "£2,355",
       "price": "£2,400 per family inc flights",
       "price rank": "1",
-      "photo": "https://www.dimoradelconicchio.it/immagini/01.jpg",
+      "photo": "https://media.vrbo.com/lodging/34000000/33980000/33972300/33972279/a421b9b4.jpg",
       "amenities": "Pool, Tennis court / football pitch, Table tennis, Darts, Table football",
       "area summary": "Capalbio is a striking medieval hilltop village in Southern Tuscany, blending historic character with a sophisticated, artistic atmosphere. While the village itself is set inland, the Maremma coastline is just a 10-minute drive away, offering long, expansive stretches of golden sand and uncrowded dunes. For children, the giant mosaic sculptures of the nearby Tarot Garden provide a world-class alternative to the beach, while the local dining scene is built on high-quality, independent Tuscan trattorias. <br> While it lacks the sheltered, bath-water coves of Sardinia, it compensates with more expansive beaches and one of the most imaginative parks in Europe for children.",
       "jb rating": "5",
@@ -163,6 +163,7 @@
       "photo": "https://www.sopranovillas.com/wp-content/uploads/2024/07/Capalbio-white-villa-09.jpeg",
       "amenities": "Big pool (unheated), sauna, indoor hot tub, turkish bath",
       "area summary": "Capalbio is a striking medieval hilltop village in Southern Tuscany, blending historic character with a sophisticated, artistic atmosphere. While the village itself is set inland, the Maremma coastline is just a 10-minute drive away, offering long, expansive stretches of golden sand and uncrowded dunes. For children, the giant mosaic sculptures of the nearby Tarot Garden provide a world-class alternative to the beach, while the local dining scene is built on high-quality, independent Tuscan trattorias. <br> While it lacks the sheltered, bath-water coves of Sardinia, it compensates with more expansive beaches and one of the most imaginative parks in Europe for children.",
+      "excluded": "TRUE",
       "jb rating": "3.5",
       "links": [
         {
@@ -227,7 +228,7 @@
     },
     {
       "name": "Le Mas de la Garde",
-      "location": "La Garde-Freinet, 20-30 mins inland from Cote D'Azur",
+      "location": "La Garde-Freinet, 30 mins from Cote D'Azue",
       "area": "France",
       "area_rating": "2",
       "hook": "Heated pool, tennis court, sauna; 20 mins to coast",
