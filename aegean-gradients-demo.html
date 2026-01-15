@@ -207,6 +207,10 @@
       background: linear-gradient(135deg, #7AB8B8 0%, #F2EBE1 100%);
     }
 
+    .bg-aegean-to-sardinian {
+      background: linear-gradient(135deg, #4A6B7A 0%, #7AB8B8 100%);
+    }
+
     /* Villa Card Styles */
     .villa-card {
       width: 300px;
@@ -317,7 +321,7 @@
   <div class="demo-container">
     <div class="demo-header">
       <h1 class="demo-title">Mediterranean Blue & Turquoise Options</h1>
-      <p class="demo-subtitle">13 options: Aegean blue, pool turquoise, and Sardinian sea colors</p>
+      <p class="demo-subtitle">14 options: Aegean blue, pool turquoise, and Sardinian sea colors</p>
       <div class="demo-instructions">
         <strong>Explore:</strong> Deep blues, bright pool turquoise (likely too vibrant), and refined Sardinian sea colors. Both solid backgrounds and gradients included.
       </div>
@@ -350,6 +354,7 @@
           <option value="pool-turquoise-gradient">Pool Turquoise to Sand — Gradient</option>
           <option value="sardinian-turquoise">Sardinian Sea — Solid (#7AB8B8)</option>
           <option value="sardinian-turquoise-gradient">Sardinian Sea to Sand — Gradient</option>
+          <option value="aegean-to-sardinian">Aegean Blue to Sardinian Turquoise — Gradient ⭐</option>
         </optgroup>
       </select>
     </div>
@@ -448,6 +453,12 @@
         gradient: 'linear-gradient(135deg, #7AB8B8 0%, #F2EBE1 100%)',
         description: 'Soft turquoise-teal to warm sand',
         className: 'bg-sardinian-turquoise-gradient'
+      },
+      'aegean-to-sardinian': {
+        title: 'Aegean Blue to Sardinian Turquoise — Gradient',
+        gradient: 'linear-gradient(135deg, #4A6B7A 0%, #7AB8B8 100%)',
+        description: 'Deep Mediterranean blue fading to muted turquoise',
+        className: 'bg-aegean-to-sardinian'
       }
     };
 
