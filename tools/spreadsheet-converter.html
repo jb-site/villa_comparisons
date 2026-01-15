@@ -224,6 +224,67 @@
       opacity: 0.8;
       margin-top: 0.5rem;
     }
+
+    /* Quick Mode and Manual Mode Sections */
+    .quick-mode-section, .manual-mode-section {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      border: 1px solid var(--border-light);
+      margin-bottom: 2rem;
+    }
+
+    .quick-mode-section h2, .manual-mode-section h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .quick-mode-instructions {
+      background: #F8F6F4;
+      padding: 1rem;
+      border-radius: 6px;
+      margin-bottom: 1.5rem;
+    }
+
+    .quick-mode-instructions p {
+      margin-bottom: 0.5rem;
+    }
+
+    .quick-mode-instructions ol {
+      margin-left: 1.5rem;
+      margin-top: 0.5rem;
+      margin-bottom: 0;
+    }
+
+    .quick-mode-instructions li {
+      margin-bottom: 0.5rem;
+    }
+
+    .url-input-group {
+      margin-bottom: 1rem;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      padding: 0.75rem;
+      border: 2px solid var(--border-light);
+      border-radius: 6px;
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.95rem;
+      background: white;
+      color: var(--text-charcoal);
+    }
+
+    input[type="text"]:focus {
+      outline: none;
+      border-color: var(--accent-blue);
+    }
+
+    .btn-small {
+      padding: 0.75rem 1rem;
+      font-size: 1.1rem;
+      min-width: auto;
+    }
   </style>
 </head>
 <body>
@@ -234,23 +295,44 @@
 
   <div class="instructions">
     <h2>How to use this tool</h2>
-    <ol>
-      <li>Open your Google Sheets with villa data</li>
-      <li>Select all cells (Ctrl+A or Cmd+A)</li>
-      <li>Copy (Ctrl+C or Cmd+C)</li>
-      <li>Paste into the input box below</li>
-      <li>Click "Convert to JSON"</li>
-      <li>Copy the generated JSON</li>
-      <li>Paste into <code>data/villas.json</code> in your project</li>
-    </ol>
+    <p><strong>Quick Mode (Recommended):</strong> Link your Google Sheet once for 1-click updates</p>
+    <p><strong>Manual Mode:</strong> Copy and paste spreadsheet data</p>
   </div>
 
+  <!-- Quick Mode Section -->
+  <div class="quick-mode-section">
+    <h2>⚡ Quick Mode</h2>
+    <div class="quick-mode-instructions">
+      <p>Link your Google Sheet for instant updates:</p>
+      <ol>
+        <li>Open your Google Sheet → <strong>File → Share → Publish to web</strong></li>
+        <li>Choose "Entire Document" and click <strong>Publish</strong></li>
+        <li>Copy your sheet URL and paste it below</li>
+      </ol>
+    </div>
+    <div class="url-input-group">
+      <label for="sheets-url">Google Sheets URL</label>
+      <div style="display: flex; gap: 0.5rem; align-items: flex-start;">
+        <input type="text" id="sheets-url" placeholder="https://docs.google.com/spreadsheets/d/..." />
+        <button class="btn-secondary btn-small" onclick="clearSavedUrl()" title="Clear saved URL">✕</button>
+      </div>
+    </div>
+    <div class="button-group">
+      <button class="btn-primary" onclick="fetchAndConvert()">🚀 Fetch and Convert</button>
+    </div>
+    <div id="quick-status" class="status"></div>
+  </div>
+
+  <!-- Manual Mode Section -->
+  <div class="manual-mode-section">
+    <h2>📋 Manual Mode</h2>
   <div class="converter-section">
     <div class="input-box">
       <label for="input">1. Paste Spreadsheet Data Here</label>
       <textarea id="input" placeholder="Paste your Google Sheets data here (including header row)..."></textarea>
       <div class="button-group">
-        <button class="btn-primary" onclick="convertToJSON()">Convert to JSON</button>
+        <button class="btn-primary" onclick="convertAndCopy()">Convert and Copy</button>
+        <button class="btn-secondary" onclick="convertToJSON()">Convert Only</button>
         <button class="btn-secondary" onclick="clearInput()">Clear</button>
       </div>
       <div id="input-status" class="status"></div>
@@ -265,6 +347,7 @@
       <div id="output-status" class="status"></div>
     </div>
   </div>
+  </div><!-- End Manual Mode Section -->
 
   <div class="column-reference">
     <h3>Google Sheets Column Structure</h3>
