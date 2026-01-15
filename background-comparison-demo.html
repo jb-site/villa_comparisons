@@ -110,16 +110,6 @@
       box-shadow: 0 0 0 3px rgba(91, 138, 154, 0.1);
     }
 
-    .color-preview {
-      display: inline-block;
-      width: 24px;
-      height: 24px;
-      border-radius: 4px;
-      border: 2px solid rgba(0, 0, 0, 0.1);
-      vertical-align: middle;
-      margin-right: 0.5rem;
-    }
-
     /* Live Preview Area */
     .live-preview {
       margin: 2rem auto;
@@ -160,159 +150,20 @@
       justify-content: center;
     }
 
-    /* Options Grid */
-    .options-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 500px), 1fr));
-      gap: 2rem;
-      max-width: 1400px;
-      margin: 0 auto;
-    }
-
-    @media (min-width: 1024px) {
-      .options-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    /* Individual Option Section */
-    .option-section {
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      cursor: pointer;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      position: relative;
-    }
-
-    .option-section:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-    }
-
-    .option-header {
-      padding: 1.5rem;
-      background: white;
-      border-bottom: 2px solid rgba(0, 0, 0, 0.05);
-    }
-
-    .option-name {
-      font-family: 'Libre Baskerville', Georgia, serif;
-      font-size: 1.125rem;
-      font-weight: 600;
-      margin-bottom: 0.25rem;
-      color: #2D2926;
-    }
-
-    .option-color {
-      font-family: 'Monaco', 'Courier New', monospace;
-      font-size: 0.8125rem;
-      color: #5B8A9A;
-      margin-bottom: 0.5rem;
-    }
-
-    .option-mood {
-      font-size: 0.875rem;
-      color: #6B625A;
-      font-style: italic;
-    }
-
-    /* Preview Area */
-    .option-preview {
-      padding: 3rem 2rem;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-    }
-
-    /* Background colors for each option */
-    /* Subtle options */
-    .bg-current {
-      background: #FAF7F4;
-    }
-
-    .bg-soft-ivory {
-      background: #F8F6F2;
-    }
-
-    .bg-pale-linen {
-      background: #F5F2ED;
-    }
-
+    /* Background Classes */
     .bg-warm-sand {
       background: #F2EBE1;
     }
 
-    /* Original moderate options */
-    .bg-weathered-stone {
-      background: #E5DDD5;
-    }
-
-    .bg-coastal-mist {
-      background: #D8E3E8;
-    }
-
-    .bg-terracotta {
-      background: #E8D5CF;
-    }
-
-    .bg-sage {
-      background: #DFE5D9;
-    }
-
-    /* Extreme options */
-    .bg-dusty-lavender {
-      background: #DCD6E3;
-    }
-
-    .bg-burnt-sienna {
-      background: #C17A5E;
+    .bg-sand-gradient {
+      background: linear-gradient(180deg, #F8F4EE 0%, #EDE5DA 100%);
     }
 
     .bg-rich-aegean {
       background: #4A6B7A;
     }
 
-    .bg-forest-green {
-      background: #4A5F52;
-    }
-
-    .bg-deep-slate {
-      background: #5A5F5C;
-    }
-
-    .bg-navy-blue {
-      background: #2D4A5C;
-    }
-
-    .bg-deep-charcoal {
-      background: #3A3632;
-    }
-
-    /* Gradient options */
-    .bg-gradient-cream-peach {
-      background: linear-gradient(135deg, #FAF7F4 0%, #F5E6DD 100%);
-    }
-
-    .bg-gradient-cream-blue {
-      background: linear-gradient(135deg, #F5F2ED 0%, #E3EBF0 100%);
-    }
-
-    .bg-gradient-warm-terracotta {
-      background: linear-gradient(135deg, #F2EBE1 0%, #E8D5CF 100%);
-    }
-
-    .bg-gradient-sage-cream {
-      background: linear-gradient(135deg, #E8EDE5 0%, #F5F2ED 100%);
-    }
-
-    .bg-gradient-vertical-sand {
-      background: linear-gradient(180deg, #F8F4EE 0%, #EDE5DA 100%);
-    }
-
-    /* Dark backgrounds - text stays normal since cards are white */
-
-    /* Villa Card Styles (from original) */
+    /* Villa Card Styles */
     .villa-card {
       width: 300px;
       background: #FFFFFF;
@@ -402,115 +253,9 @@
       color: #9A928A;
     }
 
-    /* Click hint badge */
-    .click-hint {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      background: rgba(196, 93, 62, 0.9);
-      color: white;
-      padding: 0.5rem 0.75rem;
-      border-radius: 20px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-
-    .option-section:hover .click-hint {
-      opacity: 1;
-    }
-
-    /* Fullscreen Mode */
-    .fullscreen-overlay {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 9999;
-      padding: 2rem;
-      overflow-y: auto;
-    }
-
-    .fullscreen-overlay.active {
-      display: block;
-    }
-
-    .fullscreen-content {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .fullscreen-header {
-      background: white;
-      padding: 1.5rem 2rem;
-      border-radius: 8px;
-      margin-bottom: 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .fullscreen-info {
-      flex: 1;
-    }
-
-    .fullscreen-title {
-      font-family: 'Libre Baskerville', Georgia, serif;
-      font-size: 1.5rem;
-      margin-bottom: 0.25rem;
-      color: #2D2926;
-    }
-
-    .fullscreen-color {
-      font-family: 'Monaco', 'Courier New', monospace;
-      font-size: 0.875rem;
-      color: #5B8A9A;
-    }
-
-    .close-btn {
-      background: #C45D3E;
-      color: white;
-      border: none;
-      padding: 0.75rem 1.5rem;
-      border-radius: 6px;
-      font-size: 0.875rem;
-      font-weight: 600;
-      cursor: pointer;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      transition: background 0.2s ease;
-    }
-
-    .close-btn:hover {
-      background: #A64B2F;
-    }
-
-    .fullscreen-cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, 300px);
-      gap: 1rem;
-      justify-content: flex-start;
-      padding: 2rem;
-    }
-
     @media (max-width: 768px) {
       .demo-title {
         font-size: 1.5rem;
-      }
-
-      .options-grid {
-        gap: 1.5rem;
-      }
-
-      .option-preview {
-        padding: 2rem 1rem;
       }
 
       .live-preview-cards {
@@ -521,26 +266,16 @@
       .live-preview-content {
         padding: 2rem 1rem;
       }
-
-      .fullscreen-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 1rem;
-      }
-
-      .close-btn {
-        width: 100%;
-      }
     }
   </style>
 </head>
 <body>
   <div class="demo-container">
     <div class="demo-header">
-      <h1 class="demo-title">Background Color Options</h1>
-      <p class="demo-subtitle">20 options from subtle to extreme — solids & gradients</p>
+      <h1 class="demo-title">Top 3 Background Options</h1>
+      <p class="demo-subtitle">Warm Sand (now live) • Sand Gradient • Rich Aegean Blue</p>
       <div class="demo-instructions">
-        <strong>How to use:</strong> Use the dropdown below to instantly switch between background options. Explore subtle, moderate, gradient, and extreme choices to find your ideal contrast level.
+        <strong>Current selection:</strong> Warm Sand is now live on the main site. Use the dropdown below to compare with the gradient and blue options.
       </div>
     </div>
 
@@ -549,37 +284,9 @@
       <label class="selector-label">Choose a background to preview:</label>
       <div class="selector-wrapper">
         <select id="backgroundSelector" class="background-selector">
-          <optgroup label="━━━ SUBTLE (Minimal Change) ━━━">
-            <option value="current">Current Background (#FAF7F4)</option>
-            <option value="soft-ivory">Soft Ivory (#F8F6F2)</option>
-            <option value="pale-linen">Pale Linen (#F5F2ED)</option>
-            <option value="warm-sand">Warm Sand (#F2EBE1)</option>
-          </optgroup>
-
-          <optgroup label="━━━ MODERATE (Original Options) ━━━">
-            <option value="weathered-stone">Weathered Stone (#E5DDD5)</option>
-            <option value="coastal-mist">Coastal Morning Mist (#D8E3E8)</option>
-            <option value="terracotta" selected>Sun-Baked Terracotta (#E8D5CF) ⭐</option>
-            <option value="sage">Deep Sage Garden (#DFE5D9)</option>
-          </optgroup>
-
-          <optgroup label="━━━ GRADIENTS ━━━">
-            <option value="gradient-cream-peach">Cream to Peach Gradient</option>
-            <option value="gradient-cream-blue">Cream to Blue Gradient</option>
-            <option value="gradient-warm-terracotta">Warm to Terracotta Gradient</option>
-            <option value="gradient-sage-cream">Sage to Cream Gradient</option>
-            <option value="gradient-vertical-sand">Vertical Sand Gradient</option>
-          </optgroup>
-
-          <optgroup label="━━━ EXTREME (Bold & Dramatic) ━━━">
-            <option value="dusty-lavender">Dusty Lavender (#DCD6E3)</option>
-            <option value="burnt-sienna">Burnt Sienna (#C17A5E)</option>
-            <option value="rich-aegean">Rich Aegean Blue (#4A6B7A)</option>
-            <option value="forest-green">Forest Green (#4A5F52)</option>
-            <option value="deep-slate">Deep Slate (#5A5F5C)</option>
-            <option value="navy-blue">Navy Blue (#2D4A5C)</option>
-            <option value="deep-charcoal">Deep Charcoal (#3A3632)</option>
-          </optgroup>
+          <option value="warm-sand" selected>Warm Sand (#F2EBE1) — Now Live ✓</option>
+          <option value="sand-gradient">Vertical Sand Gradient</option>
+          <option value="rich-aegean">Rich Aegean Blue (#4A6B7A)</option>
         </select>
       </div>
     </div>
@@ -587,192 +294,13 @@
     <!-- Live Preview -->
     <div class="live-preview">
       <div class="live-preview-header">
-        <h2 class="live-preview-title" id="previewTitle">Sun-Baked Terracotta</h2>
-        <div class="live-preview-color" id="previewColor">#E8D5CF • Warm Mediterranean clay</div>
+        <h2 class="live-preview-title" id="previewTitle">Warm Sand</h2>
+        <div class="live-preview-color" id="previewColor">#F2EBE1 • Now live on main site</div>
       </div>
-      <div class="live-preview-content bg-terracotta" id="livePreviewContent">
+      <div class="live-preview-content bg-warm-sand" id="livePreviewContent">
         <div class="live-preview-cards" id="livePreviewCards">
           <!-- Cards will be populated here -->
         </div>
-      </div>
-    </div>
-
-    <div class="options-grid">
-      <!-- Option 1: Weathered Stone -->
-      <div class="option-section" data-option="weathered-stone">
-        <div class="click-hint">Click to Preview</div>
-        <div class="option-header">
-          <h2 class="option-name">1. Weathered Stone</h2>
-          <div class="option-color">#E5DDD5</div>
-          <p class="option-mood">Sun-bleached limestone • Architectural elegance</p>
-        </div>
-        <div class="option-preview bg-weathered-stone">
-          <div class="villa-card">
-            <div class="villa-photo">
-              <img src="https://www.redorka.com/wp-content/uploads/2022/11/Binibeca-324-06-web-scaled.jpg" alt="Villa Bini Mapa">
-            </div>
-            <div class="villa-content">
-              <h3 class="villa-name">Villa Bini Mapa</h3>
-              <div class="villa-location">Binibeca, Menorca</div>
-              <div class="villa-price">£2,900 per family inc flights</div>
-              <p class="villa-hook">Walk to sandy beach & restaurants in nice village</p>
-              <div class="villa-amenities">Pool (not heated); big garden; A/C</div>
-              <div class="villa-links">
-                <a href="#">Website</a>
-                <span class="link-separator">|</span>
-                <a href="#">More info</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Option 2: Coastal Morning Mist -->
-      <div class="option-section" data-option="coastal-mist">
-        <div class="click-hint">Click to Preview</div>
-        <div class="option-header">
-          <h2 class="option-name">2. Coastal Morning Mist</h2>
-          <div class="option-color">#D8E3E8</div>
-          <p class="option-mood">Aegean fog • Serene coastal romance</p>
-        </div>
-        <div class="option-preview bg-coastal-mist">
-          <div class="villa-card">
-            <div class="villa-photo">
-              <img src="https://www.redorka.com/wp-content/uploads/2022/11/Binibeca-324-06-web-scaled.jpg" alt="Villa Bini Mapa">
-            </div>
-            <div class="villa-content">
-              <h3 class="villa-name">Villa Bini Mapa</h3>
-              <div class="villa-location">Binibeca, Menorca</div>
-              <div class="villa-price">£2,900 per family inc flights</div>
-              <p class="villa-hook">Walk to sandy beach & restaurants in nice village</p>
-              <div class="villa-amenities">Pool (not heated); big garden; A/C</div>
-              <div class="villa-links">
-                <a href="#">Website</a>
-                <span class="link-separator">|</span>
-                <a href="#">More info</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Option 3: Sun-Baked Terracotta (Recommended) -->
-      <div class="option-section" data-option="terracotta">
-        <div class="click-hint">Click to Preview</div>
-        <div class="option-header">
-          <h2 class="option-name">3. Sun-Baked Terracotta ⭐</h2>
-          <div class="option-color">#E8D5CF</div>
-          <p class="option-mood">Clay pots • Warm Mediterranean authenticity</p>
-        </div>
-        <div class="option-preview bg-terracotta">
-          <div class="villa-card">
-            <div class="villa-photo">
-              <img src="https://www.redorka.com/wp-content/uploads/2022/11/Binibeca-324-06-web-scaled.jpg" alt="Villa Bini Mapa">
-            </div>
-            <div class="villa-content">
-              <h3 class="villa-name">Villa Bini Mapa</h3>
-              <div class="villa-location">Binibeca, Menorca</div>
-              <div class="villa-price">£2,900 per family inc flights</div>
-              <p class="villa-hook">Walk to sandy beach & restaurants in nice village</p>
-              <div class="villa-amenities">Pool (not heated); big garden; A/C</div>
-              <div class="villa-links">
-                <a href="#">Website</a>
-                <span class="link-separator">|</span>
-                <a href="#">More info</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Option 4: Deep Sage Garden -->
-      <div class="option-section" data-option="sage">
-        <div class="click-hint">Click to Preview</div>
-        <div class="option-header">
-          <h2 class="option-name">4. Deep Sage Garden</h2>
-          <div class="option-color">#DFE5D9</div>
-          <p class="option-mood">Olive groves • Fresh garden elegance</p>
-        </div>
-        <div class="option-preview bg-sage">
-          <div class="villa-card">
-            <div class="villa-photo">
-              <img src="https://www.redorka.com/wp-content/uploads/2022/11/Binibeca-324-06-web-scaled.jpg" alt="Villa Bini Mapa">
-            </div>
-            <div class="villa-content">
-              <h3 class="villa-name">Villa Bini Mapa</h3>
-              <div class="villa-location">Binibeca, Menorca</div>
-              <div class="villa-price">£2,900 per family inc flights</div>
-              <p class="villa-hook">Walk to sandy beach & restaurants in nice village</p>
-              <div class="villa-amenities">Pool (not heated); big garden; A/C</div>
-              <div class="villa-links">
-                <a href="#">Website</a>
-                <span class="link-separator">|</span>
-                <a href="#">More info</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Fullscreen Overlays -->
-  <div id="fullscreen-weathered-stone" class="fullscreen-overlay bg-weathered-stone">
-    <div class="fullscreen-content">
-      <div class="fullscreen-header">
-        <div class="fullscreen-info">
-          <h2 class="fullscreen-title">Weathered Stone</h2>
-          <div class="fullscreen-color">#E5DDD5 • Sun-bleached limestone</div>
-        </div>
-        <button class="close-btn" onclick="closeFullscreen()">Close Preview</button>
-      </div>
-      <div class="fullscreen-cards">
-        <!-- Multiple cards will be rendered here -->
-      </div>
-    </div>
-  </div>
-
-  <div id="fullscreen-coastal-mist" class="fullscreen-overlay bg-coastal-mist">
-    <div class="fullscreen-content">
-      <div class="fullscreen-header">
-        <div class="fullscreen-info">
-          <h2 class="fullscreen-title">Coastal Morning Mist</h2>
-          <div class="fullscreen-color">#D8E3E8 • Aegean fog at dawn</div>
-        </div>
-        <button class="close-btn" onclick="closeFullscreen()">Close Preview</button>
-      </div>
-      <div class="fullscreen-cards">
-        <!-- Multiple cards will be rendered here -->
-      </div>
-    </div>
-  </div>
-
-  <div id="fullscreen-terracotta" class="fullscreen-overlay bg-terracotta">
-    <div class="fullscreen-content">
-      <div class="fullscreen-header">
-        <div class="fullscreen-info">
-          <h2 class="fullscreen-title">Sun-Baked Terracotta ⭐ Recommended</h2>
-          <div class="fullscreen-color">#E8D5CF • Warm Mediterranean clay</div>
-        </div>
-        <button class="close-btn" onclick="closeFullscreen()">Close Preview</button>
-      </div>
-      <div class="fullscreen-cards">
-        <!-- Multiple cards will be rendered here -->
-      </div>
-    </div>
-  </div>
-
-  <div id="fullscreen-sage" class="fullscreen-overlay bg-sage">
-    <div class="fullscreen-content">
-      <div class="fullscreen-header">
-        <div class="fullscreen-info">
-          <h2 class="fullscreen-title">Deep Sage Garden</h2>
-          <div class="fullscreen-color">#DFE5D9 • Olive grove freshness</div>
-        </div>
-        <button class="close-btn" onclick="closeFullscreen()">Close Preview</button>
-      </div>
-      <div class="fullscreen-cards">
-        <!-- Multiple cards will be rendered here -->
       </div>
     </div>
   </div>
@@ -780,129 +308,23 @@
   <script>
     // Background options data
     const backgroundOptions = {
-      // Subtle options
-      'current': {
-        title: 'Current Background',
-        color: '#FAF7F4',
-        description: 'Existing warm cream (baseline)',
-        className: 'bg-current'
-      },
-      'soft-ivory': {
-        title: 'Soft Ivory',
-        color: '#F8F6F2',
-        description: 'Barely lighter than current',
-        className: 'bg-soft-ivory'
-      },
-      'pale-linen': {
-        title: 'Pale Linen',
-        color: '#F5F2ED',
-        description: 'Subtle warmer tone',
-        className: 'bg-pale-linen'
-      },
       'warm-sand': {
         title: 'Warm Sand',
         color: '#F2EBE1',
-        description: 'Minimal increase in warmth',
+        description: 'Now live on main site',
         className: 'bg-warm-sand'
       },
-      // Original moderate options
-      'weathered-stone': {
-        title: 'Weathered Stone',
-        color: '#E5DDD5',
-        description: 'Sun-bleached limestone',
-        className: 'bg-weathered-stone'
-      },
-      'coastal-mist': {
-        title: 'Coastal Morning Mist',
-        color: '#D8E3E8',
-        description: 'Aegean fog at dawn',
-        className: 'bg-coastal-mist'
-      },
-      'terracotta': {
-        title: 'Sun-Baked Terracotta',
-        color: '#E8D5CF',
-        description: 'Warm Mediterranean clay',
-        className: 'bg-terracotta'
-      },
-      'sage': {
-        title: 'Deep Sage Garden',
-        color: '#DFE5D9',
-        description: 'Olive grove freshness',
-        className: 'bg-sage'
-      },
-      // Gradient options
-      'gradient-cream-peach': {
-        title: 'Cream to Peach Gradient',
-        color: 'Gradient',
-        description: 'Subtle diagonal fade',
-        className: 'bg-gradient-cream-peach'
-      },
-      'gradient-cream-blue': {
-        title: 'Cream to Blue Gradient',
-        color: 'Gradient',
-        description: 'Cool coastal fade',
-        className: 'bg-gradient-cream-blue'
-      },
-      'gradient-warm-terracotta': {
-        title: 'Warm to Terracotta Gradient',
-        color: 'Gradient',
-        description: 'Mediterranean earth tones',
-        className: 'bg-gradient-warm-terracotta'
-      },
-      'gradient-sage-cream': {
-        title: 'Sage to Cream Gradient',
-        color: 'Gradient',
-        description: 'Garden to villa transition',
-        className: 'bg-gradient-sage-cream'
-      },
-      'gradient-vertical-sand': {
+      'sand-gradient': {
         title: 'Vertical Sand Gradient',
         color: 'Gradient',
-        description: 'Top-to-bottom warm fade',
-        className: 'bg-gradient-vertical-sand'
-      },
-      // Extreme options
-      'dusty-lavender': {
-        title: 'Dusty Lavender',
-        color: '#DCD6E3',
-        description: 'Unexpected purple-grey',
-        className: 'bg-dusty-lavender'
-      },
-      'burnt-sienna': {
-        title: 'Burnt Sienna',
-        color: '#C17A5E',
-        description: 'Bold terracotta statement',
-        className: 'bg-burnt-sienna'
+        description: 'Soft top-to-bottom fade',
+        className: 'bg-sand-gradient'
       },
       'rich-aegean': {
         title: 'Rich Aegean Blue',
         color: '#4A6B7A',
         description: 'Deep Mediterranean sea',
         className: 'bg-rich-aegean'
-      },
-      'forest-green': {
-        title: 'Forest Green',
-        color: '#4A5F52',
-        description: 'Deep olive grove',
-        className: 'bg-forest-green'
-      },
-      'deep-slate': {
-        title: 'Deep Slate',
-        color: '#5A5F5C',
-        description: 'Charcoal grey stone',
-        className: 'bg-deep-slate'
-      },
-      'navy-blue': {
-        title: 'Navy Blue',
-        color: '#2D4A5C',
-        description: 'Dark moody evening',
-        className: 'bg-navy-blue'
-      },
-      'deep-charcoal': {
-        title: 'Deep Charcoal',
-        color: '#3A3632',
-        description: 'Gallery-style drama',
-        className: 'bg-deep-charcoal'
       }
     };
 
@@ -981,50 +403,6 @@
       `;
     }
 
-    // Populate fullscreen overlays with multiple cards
-    function populateFullscreenCards() {
-      const overlays = ['weathered-stone', 'coastal-mist', 'terracotta', 'sage'];
-
-      overlays.forEach(option => {
-        const container = document.querySelector(`#fullscreen-${option} .fullscreen-cards`);
-        container.innerHTML = villas.map(villa => createVillaCard(villa)).join('');
-      });
-    }
-
-    // Open fullscreen preview
-    function openFullscreen(option) {
-      closeAllFullscreens();
-      document.getElementById(`fullscreen-${option}`).classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-
-    // Close fullscreen preview
-    function closeFullscreen() {
-      closeAllFullscreens();
-      document.body.style.overflow = '';
-    }
-
-    function closeAllFullscreens() {
-      document.querySelectorAll('.fullscreen-overlay').forEach(overlay => {
-        overlay.classList.remove('active');
-      });
-    }
-
-    // Event listeners for option sections
-    document.querySelectorAll('.option-section').forEach(section => {
-      section.addEventListener('click', () => {
-        const option = section.getAttribute('data-option');
-        openFullscreen(option);
-      });
-    });
-
-    // Close on Escape key
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        closeFullscreen();
-      }
-    });
-
     // Update live preview based on dropdown selection
     function updateLivePreview(optionKey) {
       const option = backgroundOptions[optionKey];
@@ -1053,9 +431,8 @@
     });
 
     // Initialize
-    populateFullscreenCards();
     populateLivePreviewCards();
-    updateLivePreview('terracotta'); // Start with recommended option
+    updateLivePreview('warm-sand');
   </script>
 </body>
 </html>
