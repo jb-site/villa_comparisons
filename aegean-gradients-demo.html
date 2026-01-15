@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rich Aegean Gradient Explorations</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #F5F5F5;
+      color: #2D2926;
+      line-height: 1.5;
+    }
+
+    /* Main Layout */
+    .demo-container {
+      min-height: 100vh;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .demo-header {
+      text-align: center;
+      padding: 1.5rem 1rem 1rem;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .demo-title {
+      font-family: 'Libre Baskerville', Georgia, serif;
+      font-size: 1.5rem;
+      margin-bottom: 0.375rem;
+      color: #2D2926;
+    }
+
+    .demo-subtitle {
+      font-size: 0.9375rem;
+      color: #6B625A;
+      margin-bottom: 0.75rem;
+    }
+
+    .demo-instructions {
+      font-size: 0.8125rem;
+      color: #9A928A;
+      background: white;
+      padding: 0.75rem 1rem;
+      border-radius: 6px;
+      border-left: 3px solid #C45D3E;
+    }
+
+    /* Dropdown Selector */
+    .selector-container {
+      background: white;
+      padding: 1.25rem 2rem;
+      border-radius: 0;
+      margin: 0 auto 0;
+      max-width: 100%;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .selector-label {
+      display: block;
+      font-weight: 600;
+      color: #2D2926;
+      margin-bottom: 0.75rem;
+      font-size: 0.9375rem;
+    }
+
+    .background-selector {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      font-size: 1rem;
+      font-family: 'Inter', system-ui, sans-serif;
+      border: 2px solid #E5DDD5;
+      border-radius: 6px;
+      background: white;
+      color: #2D2926;
+      cursor: pointer;
+      transition: border-color 0.2s ease;
+    }
+
+    .background-selector:hover {
+      border-color: #C45D3E;
+    }
+
+    .background-selector:focus {
+      outline: none;
+      border-color: #5B8A9A;
+      box-shadow: 0 0 0 3px rgba(91, 138, 154, 0.1);
+    }
+
+    /* Live Preview Area */
+    .live-preview {
+      margin: 0;
+      max-width: 100%;
+      border-radius: 0;
+      overflow: hidden;
+      box-shadow: none;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .live-preview-header {
+      background: white;
+      padding: 1rem 2rem;
+      border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+      flex-shrink: 0;
+    }
+
+    .live-preview-title {
+      font-family: 'Libre Baskerville', Georgia, serif;
+      font-size: 1.125rem;
+      color: #2D2926;
+      margin-bottom: 0.25rem;
+    }
+
+    .live-preview-color {
+      font-family: 'Monaco', 'Courier New', monospace;
+      font-size: 0.875rem;
+      color: #5B8A9A;
+    }
+
+    .live-preview-content {
+      padding: 3rem 2rem;
+      transition: background 0.3s ease;
+      flex: 1;
+      min-height: 500px;
+      display: flex;
+      align-items: center;
+    }
+
+    .live-preview-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, 300px);
+      gap: 1rem;
+      justify-content: center;
+      width: 100%;
+    }
+
+    /* Gradient Background Classes */
+    .bg-aegean-to-sand {
+      background: linear-gradient(135deg, #4A6B7A 0%, #F2EBE1 100%);
+    }
+
+    .bg-aegean-to-cream {
+      background: linear-gradient(135deg, #4A6B7A 0%, #FAF7F4 100%);
+    }
+
+    .bg-aegean-vertical-fade {
+      background: linear-gradient(180deg, #4A6B7A 0%, #A8C5CF 100%);
+    }
+
+    .bg-aegean-to-white {
+      background: linear-gradient(135deg, #4A6B7A 0%, #FFFFFF 100%);
+    }
+
+    .bg-aegean-subtle {
+      background: linear-gradient(135deg, #6B8A99 0%, #D5DFE3 100%);
+    }
+
+    .bg-aegean-diagonal-soft {
+      background: linear-gradient(120deg, #5B7A89 0%, #E8EFF2 100%);
+    }
+
+    .bg-aegean-vertical-to-warm {
+      background: linear-gradient(180deg, #4A6B7A 0%, #E5D8D0 100%);
+    }
+
+    .bg-aegean-radial {
+      background: radial-gradient(ellipse at top, #5B7A89 0%, #E8EFF2 100%);
+    }
+
+    .bg-aegean-three-stop {
+      background: linear-gradient(135deg, #4A6B7A 0%, #7A9AAA 50%, #F2EBE1 100%);
+    }
+
+    /* Turquoise Options */
+    .bg-pool-turquoise {
+      background: #40E0D0;
+    }
+
+    .bg-pool-turquoise-gradient {
+      background: linear-gradient(135deg, #40E0D0 0%, #F2EBE1 100%);
+    }
+
+    .bg-sardinian-turquoise {
+      background: #7AB8B8;
+    }
+
+    .bg-sardinian-turquoise-gradient {
+      background: linear-gradient(135deg, #7AB8B8 0%, #F2EBE1 100%);
+    }
+
+    /* Villa Card Styles */
+    .villa-card {
+      width: 300px;
+      background: #FFFFFF;
+      border-radius: 0;
+      box-shadow: 0 1px 3px rgba(45, 41, 38, 0.08);
+      transition: box-shadow 0.25s ease, transform 0.25s ease;
+    }
+
+    .villa-card:hover {
+      box-shadow: 0 6px 20px rgba(45, 41, 38, 0.15);
+      transform: translateY(-2px);
+    }
+
+    .villa-photo {
+      width: 100%;
+      aspect-ratio: 3 / 2;
+      overflow: hidden;
+      background: #F5F1ED;
+      border: 10px solid white;
+    }
+
+    .villa-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .villa-content {
+      padding: 1rem;
+    }
+
+    .villa-name {
+      font-family: 'Libre Baskerville', Georgia, serif;
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: #2D2926;
+      margin-bottom: 0.25rem;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+    }
+
+    .villa-location {
+      color: #2D2926;
+      font-size: 0.875rem;
+      margin-bottom: 0.25rem;
+      text-decoration: underline;
+      text-decoration-style: dotted;
+      text-underline-offset: 3px;
+    }
+
+    .villa-price {
+      font-size: 0.875rem;
+      font-weight: bold;
+      color: #2D2926;
+      margin-bottom: 1rem;
+    }
+
+    .villa-hook {
+      font-size: 0.875rem;
+      color: #2D2926;
+      line-height: 1.5;
+      margin-bottom: 0.5rem;
+    }
+
+    .villa-amenities {
+      font-size: 0.875rem;
+      color: #2D2926;
+      margin-bottom: 0.25rem;
+    }
+
+    .villa-links {
+      font-size: 0.875rem;
+      color: #2D2926;
+    }
+
+    .villa-links a {
+      color: #5B8A9A;
+      text-decoration: none;
+    }
+
+    .villa-links a:hover {
+      text-decoration: underline;
+    }
+
+    .link-separator {
+      margin: 0 0.5rem;
+      color: #9A928A;
+    }
+
+    @media (max-width: 768px) {
+      .demo-title {
+        font-size: 1.5rem;
+      }
+
+      .live-preview-cards {
+        grid-template-columns: 1fr;
+        justify-items: center;
+      }
+
+      .live-preview-content {
+        padding: 2rem 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-container">
+    <div class="demo-header">
+      <h1 class="demo-title">Rich Aegean Blue Gradients</h1>
+      <p class="demo-subtitle">9 gradient variations using Rich Aegean (#4A6B7A)</p>
+      <div class="demo-instructions">
+        <strong>Explore:</strong> Each gradient combines the deep Mediterranean blue with different directions and destination colors. Some fade to warm tones (sand/cream), others stay cool (white/light blue), and some use softer starting points.
+      </div>
+    </div>
+
+    <!-- Dropdown Selector -->
+    <div class="selector-container">
+      <label class="selector-label">Choose a gradient to preview:</label>
+      <select id="backgroundSelector" class="background-selector">
+        <optgroup label="━━━ WARM FADES (Blue to Warm) ━━━">
+          <option value="aegean-to-sand" selected>Aegean to Warm Sand — Diagonal</option>
+          <option value="aegean-vertical-to-warm">Aegean to Warm Sand — Vertical</option>
+          <option value="aegean-to-cream">Aegean to Cream — Diagonal</option>
+        </optgroup>
+
+        <optgroup label="━━━ COOL FADES (Blue to Cool) ━━━">
+          <option value="aegean-vertical-fade">Aegean Vertical Fade — Deep to Light Blue</option>
+          <option value="aegean-to-white">Aegean to White — Diagonal</option>
+          <option value="aegean-diagonal-soft">Soft Aegean Diagonal — Muted Blue to Pale</option>
+        </optgroup>
+
+        <optgroup label="━━━ SPECIAL EFFECTS ━━━">
+          <option value="aegean-subtle">Subtle Aegean — Lighter Start</option>
+          <option value="aegean-three-stop">Three-Stop Gradient — Blue → Mid-Blue → Sand</option>
+          <option value="aegean-radial">Radial Gradient — Blue Center</option>
+        </optgroup>
+      </select>
+    </div>
+
+    <!-- Live Preview -->
+    <div class="live-preview">
+      <div class="live-preview-header">
+        <h2 class="live-preview-title" id="previewTitle">Aegean to Warm Sand — Diagonal</h2>
+        <div class="live-preview-color" id="previewColor">linear-gradient(135deg, #4A6B7A 0%, #F2EBE1 100%)</div>
+      </div>
+      <div class="live-preview-content bg-aegean-to-sand" id="livePreviewContent">
+        <div class="live-preview-cards" id="livePreviewCards">
+          <!-- Cards will be populated here -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Gradient options data
+    const backgroundOptions = {
+      'aegean-to-sand': {
+        title: 'Aegean to Warm Sand — Diagonal',
+        gradient: 'linear-gradient(135deg, #4A6B7A 0%, #F2EBE1 100%)',
+        description: 'Diagonal fade from deep blue to current warm sand',
+        className: 'bg-aegean-to-sand'
+      },
+      'aegean-to-cream': {
+        title: 'Aegean to Cream — Diagonal',
+        gradient: 'linear-gradient(135deg, #4A6B7A 0%, #FAF7F4 100%)',
+        description: 'Diagonal fade from deep blue to original cream',
+        className: 'bg-aegean-to-cream'
+      },
+      'aegean-vertical-fade': {
+        title: 'Aegean Vertical Fade — Deep to Light Blue',
+        gradient: 'linear-gradient(180deg, #4A6B7A 0%, #A8C5CF 100%)',
+        description: 'Top-to-bottom fade within blue family',
+        className: 'bg-aegean-vertical-fade'
+      },
+      'aegean-to-white': {
+        title: 'Aegean to White — Diagonal',
+        gradient: 'linear-gradient(135deg, #4A6B7A 0%, #FFFFFF 100%)',
+        description: 'Bold diagonal fade from blue to pure white',
+        className: 'bg-aegean-to-white'
+      },
+      'aegean-subtle': {
+        title: 'Subtle Aegean — Lighter Start',
+        gradient: 'linear-gradient(135deg, #6B8A99 0%, #D5DFE3 100%)',
+        description: 'Softer blue start, more subtle overall',
+        className: 'bg-aegean-subtle'
+      },
+      'aegean-diagonal-soft': {
+        title: 'Soft Aegean Diagonal — Muted Blue to Pale',
+        gradient: 'linear-gradient(120deg, #5B7A89 0%, #E8EFF2 100%)',
+        description: 'Gentler angle with refined blue tones',
+        className: 'bg-aegean-diagonal-soft'
+      },
+      'aegean-vertical-to-warm': {
+        title: 'Aegean to Warm Sand — Vertical',
+        gradient: 'linear-gradient(180deg, #4A6B7A 0%, #E5D8D0 100%)',
+        description: 'Vertical fade from blue to warm earth tone',
+        className: 'bg-aegean-vertical-to-warm'
+      },
+      'aegean-radial': {
+        title: 'Radial Gradient — Blue Center',
+        gradient: 'radial-gradient(ellipse at top, #5B7A89 0%, #E8EFF2 100%)',
+        description: 'Blue concentration at top, radiating outward',
+        className: 'bg-aegean-radial'
+      },
+      'aegean-three-stop': {
+        title: 'Three-Stop Gradient — Blue → Mid-Blue → Sand',
+        gradient: 'linear-gradient(135deg, #4A6B7A 0%, #7A9AAA 50%, #F2EBE1 100%)',
+        description: 'Multi-stop gradient with transition through mid-tone',
+        className: 'bg-aegean-three-stop'
+      }
+    };
+
+    // Villa data (first 4 villas for demo)
+    const villas = [
+      {
+        name: "Villa Bini Mapa",
+        location: "Binibeca, Menorca",
+        price: "£2,900 per family inc flights",
+        hook: "Walk to sandy beach & restaurants in nice village",
+        photo: "https://www.redorka.com/wp-content/uploads/2022/11/Binibeca-324-06-web-scaled.jpg",
+        amenities: "Pool (not heated); big garden; A/C",
+        links: [
+          { label: "Website", url: "#" },
+          { label: "More info", url: "#" }
+        ]
+      },
+      {
+        name: "Villa Gerani",
+        location: "Porto Rafael, Sardinia",
+        price: "£3,300 per family inc flights",
+        hook: "Heated pool in lovely village with restaurants & nice beach",
+        photo: "https://villa-gerani.com/assets/images/c/villa-gerani-home-hausansicht-pool-2024-088b18ef.jpg",
+        amenities: "Heated pool, big garden, sea views",
+        links: [
+          { label: "Website", url: "#" },
+          { label: "Airbnb", url: "#" }
+        ]
+      },
+      {
+        name: "Dimora del Conicchio",
+        location: "Capalbio, Tuscany Coast",
+        price: "£2,400 per family inc flights",
+        hook: "Pool, tennis, football, table tennis; walk to town, drive to beaches",
+        photo: "https://media.vrbo.com/lodging/34000000/33980000/33972300/33972279/a421b9b4.jpg",
+        amenities: "Pool, Tennis court / football pitch, Table tennis, Darts, Table football",
+        links: [
+          { label: "Website", url: "#" },
+          { label: "VRBO (10/10 reviews)", url: "#" }
+        ]
+      },
+      {
+        name: "Bastidon",
+        location: "Giens Peninsula, Provence Coast",
+        price: "£2,500 per family inc flights",
+        hook: "Heated pool; 15 min walk to nice beach",
+        photo: "https://img.provenceholidays.com/1aee300c-b26f-4f56-8ed7-829df319dd00/1440w960c?sig=dcb012ca7bf704b6895f8148538ffc376b99c597029632779a666036dc733ac4",
+        amenities: "Heated pool, table football",
+        links: [
+          { label: "Website", url: "#" }
+        ]
+      }
+    ];
+
+    // Generate villa card HTML
+    function createVillaCard(villa) {
+      const linksHTML = villa.links.map((link, index) => {
+        const separator = index < villa.links.length - 1 ? '<span class="link-separator">|</span>' : '';
+        return `<a href="${link.url}">${link.label}</a>${separator}`;
+      }).join('');
+
+      return `
+        <div class="villa-card">
+          <div class="villa-photo">
+            <img src="${villa.photo}" alt="${villa.name}">
+          </div>
+          <div class="villa-content">
+            <h3 class="villa-name">${villa.name}</h3>
+            <div class="villa-location">${villa.location}</div>
+            <div class="villa-price">${villa.price}</div>
+            <p class="villa-hook">${villa.hook}</p>
+            <div class="villa-amenities">${villa.amenities}</div>
+            <div class="villa-links">${linksHTML}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Update live preview based on dropdown selection
+    function updateLivePreview(optionKey) {
+      const option = backgroundOptions[optionKey];
+      const previewContent = document.getElementById('livePreviewContent');
+      const previewTitle = document.getElementById('previewTitle');
+      const previewColor = document.getElementById('previewColor');
+
+      // Update header text
+      previewTitle.textContent = option.title;
+      previewColor.textContent = option.gradient;
+
+      // Update background class
+      previewContent.className = 'live-preview-content';
+      previewContent.classList.add(option.className);
+    }
+
+    // Populate live preview cards
+    function populateLivePreviewCards() {
+      const container = document.getElementById('livePreviewCards');
+      container.innerHTML = villas.map(villa => createVillaCard(villa)).join('');
+    }
+
+    // Dropdown change handler
+    document.getElementById('backgroundSelector').addEventListener('change', (e) => {
+      updateLivePreview(e.target.value);
+    });
+
+    // Initialize
+    populateLivePreviewCards();
+    updateLivePreview('aegean-to-sand');
+  </script>
+</body>
+</html>
