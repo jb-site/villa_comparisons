@@ -426,6 +426,150 @@
 
   <script>
     const REQUIRED_FIELDS = ['name', 'location', 'price', 'photo', 'hook', 'amenities'];
+    const STORAGE_KEY = 'villa_converter_sheets_url';
+
+    // ===== localStorage Functions =====
+    function saveSheetsUrl(url) {
+      try {
+        localStorage.setItem(STORAGE_KEY, url);
+      } catch (err) {
+        console.error('Failed to save URL to localStorage:', err);
+      }
+    }
+
+    function loadSheetsUrl() {
+      try {
+        return localStorage.getItem(STORAGE_KEY) || '';
+      } catch (err) {
+        console.error('Failed to load URL from localStorage:', err);
+        return '';
+      }
+    }
+
+    function clearSavedUrl() {
+      try {
+        localStorage.removeItem(STORAGE_KEY);
+        document.getElementById('sheets-url').value = '';
+        showStatus('quick-status', 'Saved URL cleared.', 'success');
+      } catch (err) {
+        console.error('Failed to clear saved URL:', err);
+      }
+    }
+
+    // ===== Google Sheets URL Parsing =====
+    function parseGoogleSheetsUrl(url) {
+      // Extract sheet ID and gid from various Google Sheets URL formats
+      const sheetIdMatch = url.match(/\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/);
+      if (!sheetIdMatch) {
+        throw new Error('Invalid Google Sheets URL. Please check the URL and try again.');
+      }
+
+      const sheetId = sheetIdMatch[1];
+
+      // Try to extract gid from URL
+      let gid = '0'; // Default to first sheet
+      const gidMatch = url.match(/[#&]gid=([0-9]+)/);
+      if (gidMatch) {
+        gid = gidMatch[1];
+      }
+
+      return { sheetId, gid };
+    }
+
+    function buildExportUrl(sheetId, gid) {
+      return `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=tsv&gid=${gid}`;
+    }
+
+    // ===== Fetch and Convert Function =====
+    async function fetchAndConvert() {
+      const urlInput = document.getElementById('sheets-url');
+      const url = urlInput.value.trim();
+
+      if (!url) {
+        showStatus('quick-status', 'Please enter a Google Sheets URL.', 'error');
+        return;
+      }
+
+      try {
+        // Parse the URL
+        const { sheetId, gid } = parseGoogleSheetsUrl(url);
+        const exportUrl = buildExportUrl(sheetId, gid);
+
+        // Show loading message
+        showStatus('quick-status', 'Fetching data from Google Sheets...', 'success');
+
+        // Fetch the data
+        const response = await fetch(exportUrl);
+
+        if (!response.ok) {
+          throw new Error(`Failed to fetch data: ${response.status} ${response.statusText}. Make sure your sheet is published to web.`);
+        }
+
+        const tsvData = await response.text();
+
+        if (!tsvData || tsvData.trim().length === 0) {
+          throw new Error('No data received from Google Sheets. Please check your sheet and try again.');
+        }
+
+        // Parse and convert the TSV data
+        const data = parseSpreadsheet(tsvData);
+        const json = JSON.stringify(data, null, 2);
+
+        // Copy to clipboard
+        await navigator.clipboard.writeText(json);
+
+        // Save the URL for next time
+        saveSheetsUrl(url);
+
+        // Show success message
+        showStatus('quick-status', `✓ Success! Fetched and copied ${data.villas.length} villa${data.villas.length === 1 ? '' : 's'} to clipboard!`, 'success');
+
+      } catch (err) {
+        showStatus('quick-status', `Error: ${err.message}`, 'error');
+      }
+    }
+
+    // ===== Convert and Copy Function =====
+    function convertAndCopy() {
+      const inputEl = document.getElementById('input');
+      const inputText = inputEl.value.trim();
+
+      if (!inputText) {
+        showStatus('input-status', 'Please paste your spreadsheet data first.', 'error');
+        return;
+      }
+
+      try {
+        // Convert to JSON
+        const data = parseSpreadsheet(inputText);
+        const json = JSON.stringify(data, null, 2);
+
+        // Update output
+        document.getElementById('output').value = json;
+
+        // Copy to clipboard
+        navigator.clipboard.writeText(json).then(() => {
+          showStatus('input-status', `✓ Converted and copied ${data.villas.length} villa${data.villas.length === 1 ? '' : 's'} to clipboard!`, 'success');
+        }).catch(() => {
+          // Fallback for older browsers
+          const outputEl = document.getElementById('output');
+          outputEl.select();
+          document.execCommand('copy');
+          showStatus('input-status', `✓ Converted and copied ${data.villas.length} villa${data.villas.length === 1 ? '' : 's'} to clipboard!`, 'success');
+        });
+      } catch (err) {
+        showStatus('input-status', `Error: ${err.message}`, 'error');
+        document.getElementById('output').value = '';
+      }
+    }
+
+    // ===== Page Load Handler =====
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedUrl = loadSheetsUrl();
+      if (savedUrl) {
+        document.getElementById('sheets-url').value = savedUrl;
+      }
+    });
 
     function showStatus(elementId, message, type) {
       const statusEl = document.getElementById(elementId);
