@@ -7,7 +7,7 @@
 // Store loaded data
 let villasData = [];
 let locationsData = {};
-let currentSortMode = 'area';
+let currentSortMode = 'rating';
 let currentSortReversed = false;
 
 // ==========================================================================
@@ -349,7 +349,7 @@ function updateSortButtons(mode, reversed) {
   const sortLabels = {
     'area': 'Area',
     'price': 'Price',
-    'rating': 'Favourites'
+    'rating': 'Default'
   };
 
   sortButtons.forEach(btn => {
