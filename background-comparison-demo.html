@@ -226,6 +226,24 @@
     }
 
     /* Background colors for each option */
+    /* Subtle options */
+    .bg-current {
+      background: #FAF7F4;
+    }
+
+    .bg-soft-ivory {
+      background: #F8F6F2;
+    }
+
+    .bg-pale-linen {
+      background: #F5F2ED;
+    }
+
+    .bg-warm-sand {
+      background: #F2EBE1;
+    }
+
+    /* Original moderate options */
     .bg-weathered-stone {
       background: #E5DDD5;
     }
@@ -240,6 +258,56 @@
 
     .bg-sage {
       background: #DFE5D9;
+    }
+
+    /* Extreme options */
+    .bg-dusty-lavender {
+      background: #DCD6E3;
+    }
+
+    .bg-burnt-sienna {
+      background: #C17A5E;
+    }
+
+    .bg-rich-aegean {
+      background: #4A6B7A;
+    }
+
+    .bg-forest-green {
+      background: #4A5F52;
+    }
+
+    .bg-deep-slate {
+      background: #5A5F5C;
+    }
+
+    .bg-navy-blue {
+      background: #2D4A5C;
+    }
+
+    .bg-deep-charcoal {
+      background: #3A3632;
+    }
+
+    /* Gradient options */
+    .bg-gradient-cream-peach {
+      background: linear-gradient(135deg, #FAF7F4 0%, #F5E6DD 100%);
+    }
+
+    .bg-gradient-cream-blue {
+      background: linear-gradient(135deg, #F5F2ED 0%, #E3EBF0 100%);
+    }
+
+    .bg-gradient-warm-terracotta {
+      background: linear-gradient(135deg, #F2EBE1 0%, #E8D5CF 100%);
+    }
+
+    .bg-gradient-sage-cream {
+      background: linear-gradient(135deg, #E8EDE5 0%, #F5F2ED 100%);
+    }
+
+    .bg-gradient-vertical-sand {
+      background: linear-gradient(180deg, #F8F4EE 0%, #EDE5DA 100%);
     }
 
     /* Villa Card Styles (from original) */
@@ -479,18 +547,37 @@
       <label class="selector-label">Choose a background to preview:</label>
       <div class="selector-wrapper">
         <select id="backgroundSelector" class="background-selector">
-          <option value="weathered-stone">
-            1. Weathered Stone (#E5DDD5) — Sun-bleached limestone
-          </option>
-          <option value="coastal-mist">
-            2. Coastal Morning Mist (#D8E3E8) — Aegean fog
-          </option>
-          <option value="terracotta" selected>
-            3. Sun-Baked Terracotta (#E8D5CF) ⭐ Recommended
-          </option>
-          <option value="sage">
-            4. Deep Sage Garden (#DFE5D9) — Olive grove
-          </option>
+          <optgroup label="━━━ SUBTLE (Minimal Change) ━━━">
+            <option value="current">Current Background (#FAF7F4)</option>
+            <option value="soft-ivory">Soft Ivory (#F8F6F2)</option>
+            <option value="pale-linen">Pale Linen (#F5F2ED)</option>
+            <option value="warm-sand">Warm Sand (#F2EBE1)</option>
+          </optgroup>
+
+          <optgroup label="━━━ MODERATE (Original Options) ━━━">
+            <option value="weathered-stone">Weathered Stone (#E5DDD5)</option>
+            <option value="coastal-mist">Coastal Morning Mist (#D8E3E8)</option>
+            <option value="terracotta" selected>Sun-Baked Terracotta (#E8D5CF) ⭐</option>
+            <option value="sage">Deep Sage Garden (#DFE5D9)</option>
+          </optgroup>
+
+          <optgroup label="━━━ GRADIENTS ━━━">
+            <option value="gradient-cream-peach">Cream to Peach Gradient</option>
+            <option value="gradient-cream-blue">Cream to Blue Gradient</option>
+            <option value="gradient-warm-terracotta">Warm to Terracotta Gradient</option>
+            <option value="gradient-sage-cream">Sage to Cream Gradient</option>
+            <option value="gradient-vertical-sand">Vertical Sand Gradient</option>
+          </optgroup>
+
+          <optgroup label="━━━ EXTREME (Bold & Dramatic) ━━━">
+            <option value="dusty-lavender">Dusty Lavender (#DCD6E3)</option>
+            <option value="burnt-sienna">Burnt Sienna (#C17A5E)</option>
+            <option value="rich-aegean">Rich Aegean Blue (#4A6B7A)</option>
+            <option value="forest-green">Forest Green (#4A5F52)</option>
+            <option value="deep-slate">Deep Slate (#5A5F5C)</option>
+            <option value="navy-blue">Navy Blue (#2D4A5C)</option>
+            <option value="deep-charcoal">Deep Charcoal (#3A3632)</option>
+          </optgroup>
         </select>
       </div>
     </div>
@@ -691,6 +778,32 @@
   <script>
     // Background options data
     const backgroundOptions = {
+      // Subtle options
+      'current': {
+        title: 'Current Background',
+        color: '#FAF7F4',
+        description: 'Existing warm cream (baseline)',
+        className: 'bg-current'
+      },
+      'soft-ivory': {
+        title: 'Soft Ivory',
+        color: '#F8F6F2',
+        description: 'Barely lighter than current',
+        className: 'bg-soft-ivory'
+      },
+      'pale-linen': {
+        title: 'Pale Linen',
+        color: '#F5F2ED',
+        description: 'Subtle warmer tone',
+        className: 'bg-pale-linen'
+      },
+      'warm-sand': {
+        title: 'Warm Sand',
+        color: '#F2EBE1',
+        description: 'Minimal increase in warmth',
+        className: 'bg-warm-sand'
+      },
+      // Original moderate options
       'weathered-stone': {
         title: 'Weathered Stone',
         color: '#E5DDD5',
@@ -714,6 +827,80 @@
         color: '#DFE5D9',
         description: 'Olive grove freshness',
         className: 'bg-sage'
+      },
+      // Gradient options
+      'gradient-cream-peach': {
+        title: 'Cream to Peach Gradient',
+        color: 'Gradient',
+        description: 'Subtle diagonal fade',
+        className: 'bg-gradient-cream-peach'
+      },
+      'gradient-cream-blue': {
+        title: 'Cream to Blue Gradient',
+        color: 'Gradient',
+        description: 'Cool coastal fade',
+        className: 'bg-gradient-cream-blue'
+      },
+      'gradient-warm-terracotta': {
+        title: 'Warm to Terracotta Gradient',
+        color: 'Gradient',
+        description: 'Mediterranean earth tones',
+        className: 'bg-gradient-warm-terracotta'
+      },
+      'gradient-sage-cream': {
+        title: 'Sage to Cream Gradient',
+        color: 'Gradient',
+        description: 'Garden to villa transition',
+        className: 'bg-gradient-sage-cream'
+      },
+      'gradient-vertical-sand': {
+        title: 'Vertical Sand Gradient',
+        color: 'Gradient',
+        description: 'Top-to-bottom warm fade',
+        className: 'bg-gradient-vertical-sand'
+      },
+      // Extreme options
+      'dusty-lavender': {
+        title: 'Dusty Lavender',
+        color: '#DCD6E3',
+        description: 'Unexpected purple-grey',
+        className: 'bg-dusty-lavender'
+      },
+      'burnt-sienna': {
+        title: 'Burnt Sienna',
+        color: '#C17A5E',
+        description: 'Bold terracotta statement',
+        className: 'bg-burnt-sienna'
+      },
+      'rich-aegean': {
+        title: 'Rich Aegean Blue',
+        color: '#4A6B7A',
+        description: 'Deep Mediterranean sea',
+        className: 'bg-rich-aegean'
+      },
+      'forest-green': {
+        title: 'Forest Green',
+        color: '#4A5F52',
+        description: 'Deep olive grove',
+        className: 'bg-forest-green'
+      },
+      'deep-slate': {
+        title: 'Deep Slate',
+        color: '#5A5F5C',
+        description: 'Charcoal grey stone',
+        className: 'bg-deep-slate'
+      },
+      'navy-blue': {
+        title: 'Navy Blue',
+        color: '#2D4A5C',
+        description: 'Dark moody evening',
+        className: 'bg-navy-blue'
+      },
+      'deep-charcoal': {
+        title: 'Deep Charcoal',
+        color: '#3A3632',
+        description: 'Gallery-style drama',
+        className: 'bg-deep-charcoal'
       }
     };
 
