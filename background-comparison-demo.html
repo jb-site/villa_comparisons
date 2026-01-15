@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Background Options — Villa Comparison</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #F5F5F5;
+      color: #2D2926;
+      line-height: 1.5;
+    }
+
+    /* Main Layout */
+    .demo-container {
+      min-height: 100vh;
+      padding: 2rem 1rem;
+    }
+
+    .demo-header {
+      text-align: center;
+      margin-bottom: 2rem;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .demo-title {
+      font-family: 'Libre Baskerville', Georgia, serif;
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      color: #2D2926;
+    }
+
+    .demo-subtitle {
+      font-size: 1rem;
+      color: #6B625A;
+      margin-bottom: 1rem;
+    }
+
+    .demo-instructions {
+      font-size: 0.875rem;
+      color: #9A928A;
+      background: white;
+      padding: 1rem;
+      border-radius: 8px;
+      border-left: 3px solid #C45D3E;
+    }
+
+    /* Dropdown Selector */
+    .selector-container {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin: 2rem auto;
+      max-width: 800px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .selector-label {
+      display: block;
+      font-weight: 600;
+      color: #2D2926;
+      margin-bottom: 0.75rem;
+      font-size: 0.9375rem;
+    }
+
+    .selector-wrapper {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .background-selector {
+      flex: 1;
+      min-width: 200px;
+      padding: 0.75rem 1rem;
+      font-size: 1rem;
+      font-family: 'Inter', system-ui, sans-serif;
+      border: 2px solid #E5DDD5;
+      border-radius: 6px;
+      background: white;
+      color: #2D2926;
+      cursor: pointer;
+      transition: border-color 0.2s ease;
+    }
+
+    .background-selector:hover {
+      border-color: #C45D3E;
+    }
+
+    .background-selector:focus {
+      outline: none;
+      border-color: #5B8A9A;
+      box-shadow: 0 0 0 3px rgba(91, 138, 154, 0.1);
+    }
+
+    .color-preview {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      border: 2px solid rgba(0, 0, 0, 0.1);
+      vertical-align: middle;
+      margin-right: 0.5rem;
+    }
+
+    /* Live Preview Area */
+    .live-preview {
+      margin: 2rem auto;
+      max-width: 1200px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .live-preview-header {
+      background: white;
+      padding: 1rem 1.5rem;
+      border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .live-preview-title {
+      font-family: 'Libre Baskerville', Georgia, serif;
+      font-size: 1.125rem;
+      color: #2D2926;
+      margin-bottom: 0.25rem;
+    }
+
+    .live-preview-color {
+      font-family: 'Monaco', 'Courier New', monospace;
+      font-size: 0.875rem;
+      color: #5B8A9A;
+    }
+
+    .live-preview-content {
+      padding: 3rem 2rem;
+      transition: background-color 0.3s ease;
+    }
+
+    .live-preview-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, 300px);
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    /* Options Grid */
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 500px), 1fr));
+      gap: 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    @media (min-width: 1024px) {
+      .options-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    /* Individual Option Section */
+    .option-section {
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+    }
+
+    .option-section:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    .option-header {
+      padding: 1.5rem;
+      background: white;
+      border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .option-name {
+      font-family: 'Libre Baskerville', Georgia, serif;
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+      color: #2D2926;
+    }
+
+    .option-color {
+      font-family: 'Monaco', 'Courier New', monospace;
+      font-size: 0.8125rem;
+      color: #5B8A9A;
+      margin-bottom: 0.5rem;
+    }
+
+    .option-mood {
+      font-size: 0.875rem;
+      color: #6B625A;
+      font-style: italic;
+    }
+
+    /* Preview Area */
+    .option-preview {
+      padding: 3rem 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    /* Background colors for each option */
+    .bg-weathered-stone {
+      background: #E5DDD5;
+    }
+
+    .bg-coastal-mist {
+      background: #D8E3E8;
+    }
+
+    .bg-terracotta {
+      background: #E8D5CF;
+    }
+
+    .bg-sage {
+      background: #DFE5D9;
+    }
+
+    /* Villa Card Styles (from original) */
+    .villa-card {
+      width: 300px;
+      background: #FFFFFF;
+      border-radius: 0;
+      box-shadow: 0 1px 3px rgba(45, 41, 38, 0.08);
+      transition: box-shadow 0.25s ease, transform 0.25s ease;
+    }
+
+    .villa-card:hover {
+      box-shadow: 0 6px 20px rgba(45, 41, 38, 0.15);
+      transform: translateY(-2px);
+    }
+
+    .villa-photo {
+      width: 100%;
+      aspect-ratio: 3 / 2;
+      overflow: hidden;
+      background: #F5F1ED;
+      border: 10px solid white;
+    }
+
+    .villa-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .villa-content {
+      padding: 1rem;
+    }
+
+    .villa-name {
+      font-family: 'Libre Baskerville', Georgia, serif;
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: #2D2926;
+      margin-bottom: 0.25rem;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+    }
+
+    .villa-location {
+      color: #2D2926;
+      font-size: 0.875rem;
+      margin-bottom: 0.25rem;
+      text-decoration: underline;
+      text-decoration-style: dotted;
+      text-underline-offset: 3px;
+    }
+
+    .villa-price {
+      font-size: 0.875rem;
+      font-weight: bold;
+      color: #2D2926;
+      margin-bottom: 1rem;
+    }
+
+    .villa-hook {
+      font-size: 0.875rem;
+      color: #2D2926;
+      line-height: 1.5;
+      margin-bottom: 0.5rem;
+    }
+
+    .villa-amenities {
+      font-size: 0.875rem;
+      color: #2D2926;
+      margin-bottom: 0.25rem;
+    }
+
+    .villa-links {
+      font-size: 0.875rem;
+      color: #2D2926;
+    }
+
+    .villa-links a {
+      color: #5B8A9A;
+      text-decoration: none;
+    }
+
+    .villa-links a:hover {
+      text-decoration: underline;
+    }
+
+    .link-separator {
+      margin: 0 0.5rem;
+      color: #9A928A;
+    }
+
+    /* Click hint badge */
+    .click-hint {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(196, 93, 62, 0.9);
+      color: white;
+      padding: 0.5rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .option-section:hover .click-hint {
+      opacity: 1;
+    }
+
+    /* Fullscreen Mode */
+    .fullscreen-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 9999;
+      padding: 2rem;
+      overflow-y: auto;
+    }
+
+    .fullscreen-overlay.active {
+      display: block;
+    }
+
+    .fullscreen-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .fullscreen-header {
+      background: white;
+      padding: 1.5rem 2rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .fullscreen-info {
+      flex: 1;
+    }
+
+    .fullscreen-title {
+      font-family: 'Libre Baskerville', Georgia, serif;
+      font-size: 1.5rem;
+      margin-bottom: 0.25rem;
+      color: #2D2926;
+    }
+
+    .fullscreen-color {
+      font-family: 'Monaco', 'Courier New', monospace;
+      font-size: 0.875rem;
+      color: #5B8A9A;
+    }
+
+    .close-btn {
+      background: #C45D3E;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      transition: background 0.2s ease;
+    }
+
+    .close-btn:hover {
+      background: #A64B2F;
+    }
+
+    .fullscreen-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, 300px);
+      gap: 1rem;
+      justify-content: flex-start;
+      padding: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .demo-title {
+        font-size: 1.5rem;
+      }
+
+      .options-grid {
+        gap: 1.5rem;
+      }
+
+      .option-preview {
+        padding: 2rem 1rem;
+      }
+
+      .live-preview-cards {
+        grid-template-columns: 1fr;
+        justify-items: center;
+      }
+
+      .live-preview-content {
+        padding: 2rem 1rem;
+      }
+
+      .fullscreen-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+
+      .close-btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-container">
+    <div class="demo-header">
+      <h1 class="demo-title">Background Color Options</h1>
+      <p class="demo-subtitle">Four Mediterranean-inspired backgrounds for better card contrast</p>
+      <div class="demo-instructions">
+        <strong>How to use:</strong> Use the dropdown below to instantly switch between background options, or click any card to see it full-screen.
+      </div>
+    </div>
+
+    <!-- Dropdown Selector -->
+    <div class="selector-container">
+      <label class="selector-label">Choose a background to preview:</label>
+      <div class="selector-wrapper">
+        <select id="backgroundSelector" class="background-selector">
+          <option value="weathered-stone">
+            1. Weathered Stone (#E5DDD5) — Sun-bleached limestone
+          </option>
+          <option value="coastal-mist">
+            2. Coastal Morning Mist (#D8E3E8) — Aegean fog
+          </option>
+          <option value="terracotta" selected>
+            3. Sun-Baked Terracotta (#E8D5CF) ⭐ Recommended
+          </option>
+          <option value="sage">
+            4. Deep Sage Garden (#DFE5D9) — Olive grove
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Live Preview -->
+    <div class="live-preview">
+      <div class="live-preview-header">
+        <h2 class="live-preview-title" id="previewTitle">Sun-Baked Terracotta</h2>
+        <div class="live-preview-color" id="previewColor">#E8D5CF • Warm Mediterranean clay</div>
+      </div>
+      <div class="live-preview-content bg-terracotta" id="livePreviewContent">
+        <div class="live-preview-cards" id="livePreviewCards">
+          <!-- Cards will be populated here -->
+        </div>
+      </div>
+    </div>
+
+    <div class="options-grid">
+      <!-- Option 1: Weathered Stone -->
+      <div class="option-section" data-option="weathered-stone">
+        <div class="click-hint">Click to Preview</div>
+        <div class="option-header">
+          <h2 class="option-name">1. Weathered Stone</h2>
+          <div class="option-color">#E5DDD5</div>
+          <p class="option-mood">Sun-bleached limestone • Architectural elegance</p>
+        </div>
+        <div class="option-preview bg-weathered-stone">
+          <div class="villa-card">
+            <div class="villa-photo">
+              <img src="https://www.redorka.com/wp-content/uploads/2022/11/Binibeca-324-06-web-scaled.jpg" alt="Villa Bini Mapa">
+            </div>
+            <div class="villa-content">
+              <h3 class="villa-name">Villa Bini Mapa</h3>
+              <div class="villa-location">Binibeca, Menorca</div>
+              <div class="villa-price">£2,900 per family inc flights</div>
+              <p class="villa-hook">Walk to sandy beach & restaurants in nice village</p>
+              <div class="villa-amenities">Pool (not heated); big garden; A/C</div>
+              <div class="villa-links">
+                <a href="#">Website</a>
+                <span class="link-separator">|</span>
+                <a href="#">More info</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Option 2: Coastal Morning Mist -->
+      <div class="option-section" data-option="coastal-mist">
+        <div class="click-hint">Click to Preview</div>
+        <div class="option-header">
+          <h2 class="option-name">2. Coastal Morning Mist</h2>
+          <div class="option-color">#D8E3E8</div>
+          <p class="option-mood">Aegean fog • Serene coastal romance</p>
+        </div>
+        <div class="option-preview bg-coastal-mist">
+          <div class="villa-card">
+            <div class="villa-photo">
+              <img src="https://www.redorka.com/wp-content/uploads/2022/11/Binibeca-324-06-web-scaled.jpg" alt="Villa Bini Mapa">
+            </div>
+            <div class="villa-content">
+              <h3 class="villa-name">Villa Bini Mapa</h3>
+              <div class="villa-location">Binibeca, Menorca</div>
+              <div class="villa-price">£2,900 per family inc flights</div>
+              <p class="villa-hook">Walk to sandy beach & restaurants in nice village</p>
+              <div class="villa-amenities">Pool (not heated); big garden; A/C</div>
+              <div class="villa-links">
+                <a href="#">Website</a>
+                <span class="link-separator">|</span>
+                <a href="#">More info</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Option 3: Sun-Baked Terracotta (Recommended) -->
+      <div class="option-section" data-option="terracotta">
+        <div class="click-hint">Click to Preview</div>
+        <div class="option-header">
+          <h2 class="option-name">3. Sun-Baked Terracotta ⭐</h2>
+          <div class="option-color">#E8D5CF</div>
+          <p class="option-mood">Clay pots • Warm Mediterranean authenticity</p>
+        </div>
+        <div class="option-preview bg-terracotta">
+          <div class="villa-card">
+            <div class="villa-photo">
+              <img src="https://www.redorka.com/wp-content/uploads/2022/11/Binibeca-324-06-web-scaled.jpg" alt="Villa Bini Mapa">
+            </div>
+            <div class="villa-content">
+              <h3 class="villa-name">Villa Bini Mapa</h3>
+              <div class="villa-location">Binibeca, Menorca</div>
+              <div class="villa-price">£2,900 per family inc flights</div>
+              <p class="villa-hook">Walk to sandy beach & restaurants in nice village</p>
+              <div class="villa-amenities">Pool (not heated); big garden; A/C</div>
+              <div class="villa-links">
+                <a href="#">Website</a>
+                <span class="link-separator">|</span>
+                <a href="#">More info</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Option 4: Deep Sage Garden -->
+      <div class="option-section" data-option="sage">
+        <div class="click-hint">Click to Preview</div>
+        <div class="option-header">
+          <h2 class="option-name">4. Deep Sage Garden</h2>
+          <div class="option-color">#DFE5D9</div>
+          <p class="option-mood">Olive groves • Fresh garden elegance</p>
+        </div>
+        <div class="option-preview bg-sage">
+          <div class="villa-card">
+            <div class="villa-photo">
+              <img src="https://www.redorka.com/wp-content/uploads/2022/11/Binibeca-324-06-web-scaled.jpg" alt="Villa Bini Mapa">
+            </div>
+            <div class="villa-content">
+              <h3 class="villa-name">Villa Bini Mapa</h3>
+              <div class="villa-location">Binibeca, Menorca</div>
+              <div class="villa-price">£2,900 per family inc flights</div>
+              <p class="villa-hook">Walk to sandy beach & restaurants in nice village</p>
+              <div class="villa-amenities">Pool (not heated); big garden; A/C</div>
+              <div class="villa-links">
+                <a href="#">Website</a>
+                <span class="link-separator">|</span>
+                <a href="#">More info</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fullscreen Overlays -->
+  <div id="fullscreen-weathered-stone" class="fullscreen-overlay bg-weathered-stone">
+    <div class="fullscreen-content">
+      <div class="fullscreen-header">
+        <div class="fullscreen-info">
+          <h2 class="fullscreen-title">Weathered Stone</h2>
+          <div class="fullscreen-color">#E5DDD5 • Sun-bleached limestone</div>
+        </div>
+        <button class="close-btn" onclick="closeFullscreen()">Close Preview</button>
+      </div>
+      <div class="fullscreen-cards">
+        <!-- Multiple cards will be rendered here -->
+      </div>
+    </div>
+  </div>
+
+  <div id="fullscreen-coastal-mist" class="fullscreen-overlay bg-coastal-mist">
+    <div class="fullscreen-content">
+      <div class="fullscreen-header">
+        <div class="fullscreen-info">
+          <h2 class="fullscreen-title">Coastal Morning Mist</h2>
+          <div class="fullscreen-color">#D8E3E8 • Aegean fog at dawn</div>
+        </div>
+        <button class="close-btn" onclick="closeFullscreen()">Close Preview</button>
+      </div>
+      <div class="fullscreen-cards">
+        <!-- Multiple cards will be rendered here -->
+      </div>
+    </div>
+  </div>
+
+  <div id="fullscreen-terracotta" class="fullscreen-overlay bg-terracotta">
+    <div class="fullscreen-content">
+      <div class="fullscreen-header">
+        <div class="fullscreen-info">
+          <h2 class="fullscreen-title">Sun-Baked Terracotta ⭐ Recommended</h2>
+          <div class="fullscreen-color">#E8D5CF • Warm Mediterranean clay</div>
+        </div>
+        <button class="close-btn" onclick="closeFullscreen()">Close Preview</button>
+      </div>
+      <div class="fullscreen-cards">
+        <!-- Multiple cards will be rendered here -->
+      </div>
+    </div>
+  </div>
+
+  <div id="fullscreen-sage" class="fullscreen-overlay bg-sage">
+    <div class="fullscreen-content">
+      <div class="fullscreen-header">
+        <div class="fullscreen-info">
+          <h2 class="fullscreen-title">Deep Sage Garden</h2>
+          <div class="fullscreen-color">#DFE5D9 • Olive grove freshness</div>
+        </div>
+        <button class="close-btn" onclick="closeFullscreen()">Close Preview</button>
+      </div>
+      <div class="fullscreen-cards">
+        <!-- Multiple cards will be rendered here -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Background options data
+    const backgroundOptions = {
+      'weathered-stone': {
+        title: 'Weathered Stone',
+        color: '#E5DDD5',
+        description: 'Sun-bleached limestone',
+        className: 'bg-weathered-stone'
+      },
+      'coastal-mist': {
+        title: 'Coastal Morning Mist',
+        color: '#D8E3E8',
+        description: 'Aegean fog at dawn',
+        className: 'bg-coastal-mist'
+      },
+      'terracotta': {
+        title: 'Sun-Baked Terracotta',
+        color: '#E8D5CF',
+        description: 'Warm Mediterranean clay',
+        className: 'bg-terracotta'
+      },
+      'sage': {
+        title: 'Deep Sage Garden',
+        color: '#DFE5D9',
+        description: 'Olive grove freshness',
+        className: 'bg-sage'
+      }
+    };
+
+    // Villa data (first 4 villas for demo)
+    const villas = [
+      {
+        name: "Villa Bini Mapa",
+        location: "Binibeca, Menorca",
+        price: "£2,900 per family inc flights",
+        hook: "Walk to sandy beach & restaurants in nice village",
+        photo: "https://www.redorka.com/wp-content/uploads/2022/11/Binibeca-324-06-web-scaled.jpg",
+        amenities: "Pool (not heated); big garden; A/C",
+        links: [
+          { label: "Website", url: "#" },
+          { label: "More info", url: "#" }
+        ]
+      },
+      {
+        name: "Villa Gerani",
+        location: "Porto Rafael, Sardinia",
+        price: "£3,300 per family inc flights",
+        hook: "Heated pool in lovely village with restaurants & nice beach",
+        photo: "https://villa-gerani.com/assets/images/c/villa-gerani-home-hausansicht-pool-2024-088b18ef.jpg",
+        amenities: "Heated pool, big garden, sea views",
+        links: [
+          { label: "Website", url: "#" },
+          { label: "Airbnb", url: "#" }
+        ]
+      },
+      {
+        name: "Dimora del Conicchio",
+        location: "Capalbio, Tuscany Coast",
+        price: "£2,400 per family inc flights",
+        hook: "Pool, tennis, football, table tennis; walk to town, drive to beaches",
+        photo: "https://media.vrbo.com/lodging/34000000/33980000/33972300/33972279/a421b9b4.jpg",
+        amenities: "Pool, Tennis court / football pitch, Table tennis, Darts, Table football",
+        links: [
+          { label: "Website", url: "#" },
+          { label: "VRBO (10/10 reviews)", url: "#" }
+        ]
+      },
+      {
+        name: "Bastidon",
+        location: "Giens Peninsula, Provence Coast",
+        price: "£2,500 per family inc flights",
+        hook: "Heated pool; 15 min walk to nice beach",
+        photo: "https://img.provenceholidays.com/1aee300c-b26f-4f56-8ed7-829df319dd00/1440w960c?sig=dcb012ca7bf704b6895f8148538ffc376b99c597029632779a666036dc733ac4",
+        amenities: "Heated pool, table football",
+        links: [
+          { label: "Website", url: "#" }
+        ]
+      }
+    ];
+
+    // Generate villa card HTML
+    function createVillaCard(villa) {
+      const linksHTML = villa.links.map((link, index) => {
+        const separator = index < villa.links.length - 1 ? '<span class="link-separator">|</span>' : '';
+        return `<a href="${link.url}">${link.label}</a>${separator}`;
+      }).join('');
+
+      return `
+        <div class="villa-card">
+          <div class="villa-photo">
+            <img src="${villa.photo}" alt="${villa.name}">
+          </div>
+          <div class="villa-content">
+            <h3 class="villa-name">${villa.name}</h3>
+            <div class="villa-location">${villa.location}</div>
+            <div class="villa-price">${villa.price}</div>
+            <p class="villa-hook">${villa.hook}</p>
+            <div class="villa-amenities">${villa.amenities}</div>
+            <div class="villa-links">${linksHTML}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Populate fullscreen overlays with multiple cards
+    function populateFullscreenCards() {
+      const overlays = ['weathered-stone', 'coastal-mist', 'terracotta', 'sage'];
+
+      overlays.forEach(option => {
+        const container = document.querySelector(`#fullscreen-${option} .fullscreen-cards`);
+        container.innerHTML = villas.map(villa => createVillaCard(villa)).join('');
+      });
+    }
+
+    // Open fullscreen preview
+    function openFullscreen(option) {
+      closeAllFullscreens();
+      document.getElementById(`fullscreen-${option}`).classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    // Close fullscreen preview
+    function closeFullscreen() {
+      closeAllFullscreens();
+      document.body.style.overflow = '';
+    }
+
+    function closeAllFullscreens() {
+      document.querySelectorAll('.fullscreen-overlay').forEach(overlay => {
+        overlay.classList.remove('active');
+      });
+    }
+
+    // Event listeners for option sections
+    document.querySelectorAll('.option-section').forEach(section => {
+      section.addEventListener('click', () => {
+        const option = section.getAttribute('data-option');
+        openFullscreen(option);
+      });
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeFullscreen();
+      }
+    });
+
+    // Update live preview based on dropdown selection
+    function updateLivePreview(optionKey) {
+      const option = backgroundOptions[optionKey];
+      const previewContent = document.getElementById('livePreviewContent');
+      const previewTitle = document.getElementById('previewTitle');
+      const previewColor = document.getElementById('previewColor');
+
+      // Update header text
+      previewTitle.textContent = option.title;
+      previewColor.textContent = `${option.color} • ${option.description}`;
+
+      // Update background class
+      previewContent.className = 'live-preview-content';
+      previewContent.classList.add(option.className);
+    }
+
+    // Populate live preview cards
+    function populateLivePreviewCards() {
+      const container = document.getElementById('livePreviewCards');
+      container.innerHTML = villas.map(villa => createVillaCard(villa)).join('');
+    }
+
+    // Dropdown change handler
+    document.getElementById('backgroundSelector').addEventListener('change', (e) => {
+      updateLivePreview(e.target.value);
+    });
+
+    // Initialize
+    populateFullscreenCards();
+    populateLivePreviewCards();
+    updateLivePreview('terracotta'); // Start with recommended option
+  </script>
+</body>
+</html>
