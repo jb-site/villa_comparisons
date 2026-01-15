@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Villa Data Converter - Google Sheets to JSON</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-cream: #FAF7F4;
+      --text-charcoal: #3D3D3D;
+      --accent-blue: #5B8A9A;
+      --error-red: #C85454;
+      --success-green: #5A8C5A;
+      --border-light: #E5DFD9;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Source Sans 3', sans-serif;
+      background: var(--bg-cream);
+      color: var(--text-charcoal);
+      line-height: 1.6;
+      padding: 2rem 1rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      margin-bottom: 2rem;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      opacity: 0.8;
+    }
+
+    .instructions {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+      border: 1px solid var(--border-light);
+    }
+
+    .instructions h2 {
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .instructions ol {
+      margin-left: 1.5rem;
+    }
+
+    .instructions li {
+      margin-bottom: 0.5rem;
+    }
+
+    .converter-section {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    @media (min-width: 768px) {
+      .converter-section {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .input-box, .output-box {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 400px;
+      padding: 1rem;
+      border: 2px solid var(--border-light);
+      border-radius: 8px;
+      font-family: 'Source Sans 3', monospace;
+      font-size: 0.9rem;
+      resize: vertical;
+      background: white;
+      color: var(--text-charcoal);
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: var(--accent-blue);
+    }
+
+    textarea[readonly] {
+      background: #F8F6F4;
+      cursor: default;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+
+    button {
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: 'Source Sans 3', sans-serif;
+      transition: transform 0.1s, box-shadow 0.2s;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    .btn-primary {
+      background: var(--accent-blue);
+      color: white;
+    }
+
+    .btn-secondary {
+      background: white;
+      color: var(--text-charcoal);
+      border: 2px solid var(--border-light);
+    }
+
+    .status {
+      padding: 1rem;
+      border-radius: 6px;
+      margin-top: 1rem;
+      display: none;
+    }
+
+    .status.show {
+      display: block;
+    }
+
+    .status.success {
+      background: #E8F5E8;
+      color: var(--success-green);
+      border: 1px solid var(--success-green);
+    }
+
+    .status.error {
+      background: #FCE8E8;
+      color: var(--error-red);
+      border: 1px solid var(--error-red);
+    }
+
+    .column-reference {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      border: 1px solid var(--border-light);
+      margin-top: 2rem;
+    }
+
+    .column-reference h3 {
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+    }
+
+    .column-table {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 0.5rem;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    th {
+      font-weight: 600;
+      background: #F8F6F4;
+    }
+
+    code {
+      background: #F8F6F4;
+      padding: 0.2rem 0.4rem;
+      border-radius: 3px;
+      font-family: monospace;
+      font-size: 0.9em;
+    }
+
+    .note {
+      font-size: 0.9rem;
+      opacity: 0.8;
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Villa Data Converter</h1>
+    <p class="subtitle">Convert Google Sheets data to JSON for your villa website</p>
+  </header>
+
+  <div class="instructions">
+    <h2>How to use this tool</h2>
+    <ol>
+      <li>Open your Google Sheets with villa data</li>
+      <li>Select all cells (Ctrl+A or Cmd+A)</li>
+      <li>Copy (Ctrl+C or Cmd+C)</li>
+      <li>Paste into the input box below</li>
+      <li>Click "Convert to JSON"</li>
+      <li>Copy the generated JSON</li>
+      <li>Paste into <code>data/villas.json</code> in your project</li>
+    </ol>
+  </div>
+
+  <div class="converter-section">
+    <div class="input-box">
+      <label for="input">1. Paste Spreadsheet Data Here</label>
+      <textarea id="input" placeholder="Paste your Google Sheets data here (including header row)..."></textarea>
+      <div class="button-group">
+        <button class="btn-primary" onclick="convertToJSON()">Convert to JSON</button>
+        <button class="btn-secondary" onclick="clearInput()">Clear</button>
+      </div>
+      <div id="input-status" class="status"></div>
+    </div>
+
+    <div class="output-box">
+      <label for="output">2. Copy JSON Output</label>
+      <textarea id="output" readonly placeholder="JSON output will appear here..."></textarea>
+      <div class="button-group">
+        <button class="btn-primary" onclick="copyToClipboard()">Copy JSON</button>
+      </div>
+      <div id="output-status" class="status"></div>
+    </div>
+  </div>
+
+  <div class="column-reference">
+    <h3>Google Sheets Column Structure</h3>
+    <div class="column-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Column Name</th>
+            <th>Required?</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>name</code></td>
+            <td>✓ Yes</td>
+            <td>Villa name</td>
+          </tr>
+          <tr>
+            <td><code>location</code></td>
+            <td>✓ Yes</td>
+            <td>Location (e.g., "Binibeca, Menorca")</td>
+          </tr>
+          <tr>
+            <td><code>hook</code></td>
+            <td>✓ Yes</td>
+            <td>One-line description</td>
+          </tr>
+          <tr>
+            <td><code>villa_location</code></td>
+            <td>Optional</td>
+            <td>Detailed location description</td>
+          </tr>
+          <tr>
+            <td><code>price</code></td>
+            <td>✓ Yes</td>
+            <td>Price (e.g., "£3,300 per family inc flights")</td>
+          </tr>
+          <tr>
+            <td><code>photo</code></td>
+            <td>✓ Yes</td>
+            <td>Image URL or relative path</td>
+          </tr>
+          <tr>
+            <td><code>amenities</code></td>
+            <td>✓ Yes</td>
+            <td>Comma-separated amenities</td>
+          </tr>
+          <tr>
+            <td><code>link_1_label</code></td>
+            <td>Optional</td>
+            <td>First booking link label (e.g., "Website")</td>
+          </tr>
+          <tr>
+            <td><code>link_1_url</code></td>
+            <td>Optional</td>
+            <td>First booking link URL</td>
+          </tr>
+          <tr>
+            <td><code>link_2_label</code></td>
+            <td>Optional</td>
+            <td>Second booking link label</td>
+          </tr>
+          <tr>
+            <td><code>link_2_url</code></td>
+            <td>Optional</td>
+            <td>Second booking link URL</td>
+          </tr>
+          <tr>
+            <td colspan="3" class="note">Add more link columns as needed: link_3_label, link_3_url, link_4_label, link_4_url, etc.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    const REQUIRED_FIELDS = ['name', 'location', 'price', 'photo', 'hook', 'amenities'];
+
+    function showStatus(elementId, message, type) {
+      const statusEl = document.getElementById(elementId);
+      statusEl.textContent = message;
+      statusEl.className = `status show ${type}`;
+
+      if (type === 'success') {
+        setTimeout(() => {
+          statusEl.classList.remove('show');
+        }, 3000);
+      }
+    }
+
+    function clearInput() {
+      document.getElementById('input').value = '';
+      document.getElementById('output').value = '';
+      document.getElementById('input-status').classList.remove('show');
+      document.getElementById('output-status').classList.remove('show');
+    }
+
+    function parseLine(line, delimiter) {
+      // Parser that handles quoted fields and preserves multi-line content
+      const result = [];
+      let current = '';
+      let inQuotes = false;
+
+      for (let i = 0; i < line.length; i++) {
+        const char = line[i];
+        const nextChar = line[i + 1];
+
+        if (char === '"') {
+          // Handle escaped quotes ("")
+          if (inQuotes && nextChar === '"') {
+            current += '"';
+            i++; // Skip next quote
+          } else {
+            // Toggle quote state but don't add the quote to the value
+            inQuotes = !inQuotes;
+          }
+        } else if (char === delimiter && !inQuotes) {
+          result.push(current.trim());
+          current = '';
+        } else {
+          current += char;
+        }
+      }
+
+      result.push(current.trim());
+      return result;
+    }
+
+    function buildVillaObject(headers, values) {
+      const villa = {};
+      const links = [];
+
+      // Map basic fields
+      headers.forEach((header, index) => {
+        const value = values[index] || '';
+
+        // Handle link columns separately
+        if (header.startsWith('link_') && header.endsWith('_label')) {
+          // Extract link number
+          const linkNum = header.match(/link_(\d+)_label/)[1];
+          const urlHeader = `link_${linkNum}_url`;
+          const urlIndex = headers.indexOf(urlHeader);
+
+          if (urlIndex !== -1) {
+            const label = value.trim();
+            const url = (values[urlIndex] || '').trim();
+
+            // Only add link if both label and URL are non-empty
+            if (label && url) {
+              links.push({ label, url });
+            }
+          }
+        } else if (!header.startsWith('link_') || !header.endsWith('_url')) {
+          // Add non-link fields directly
+          if (value) {
+            villa[header] = value;
+          }
+        }
+      });
+
+      // Add links array if any links exist
+      if (links.length > 0) {
+        villa.links = links;
+      }
+
+      return villa;
+    }
+
+    function splitIntoRows(text, delimiter) {
+      // Split text into rows while respecting quoted fields that may contain newlines
+      const rows = [];
+      let currentRow = '';
+      let inQuotes = false;
+
+      for (let i = 0; i < text.length; i++) {
+        const char = text[i];
+        const nextChar = text[i + 1];
+
+        if (char === '"') {
+          // Handle escaped quotes ("")
+          if (nextChar === '"') {
+            currentRow += '""';
+            i++; // Skip next quote
+          } else {
+            inQuotes = !inQuotes;
+            currentRow += char;
+          }
+        } else if (char === '\n' && !inQuotes) {
+          // Only treat newline as row separator if not inside quotes
+          if (currentRow.trim()) {
+            rows.push(currentRow);
+          }
+          currentRow = '';
+        } else if (char === '\r') {
+          // Skip carriage returns (Windows line endings)
+          continue;
+        } else {
+          currentRow += char;
+        }
+      }
+
+      // Add the last row if it exists
+      if (currentRow.trim()) {
+        rows.push(currentRow);
+      }
+
+      return rows;
+    }
+
+    function parseSpreadsheet(text) {
+      // Auto-detect delimiter: tab (Google Sheets) or comma (CSV)
+      const delimiter = text.includes('\t') ? '\t' : ',';
+
+      // Split by newlines while respecting quoted fields
+      const lines = splitIntoRows(text.trim(), delimiter);
+
+      if (lines.length === 0) {
+        throw new Error('No data found. Please paste your spreadsheet content.');
+      }
+
+      if (lines.length === 1) {
+        throw new Error('Only header row found. Please include villa data rows.');
+      }
+
+      // Parse header row
+      const headers = parseLine(lines[0], delimiter).map(h => h.trim().toLowerCase());
+
+      // Validate required fields
+      const missingFields = REQUIRED_FIELDS.filter(field => !headers.includes(field));
+      if (missingFields.length > 0) {
+        throw new Error(`Missing required columns: ${missingFields.join(', ')}`);
+      }
+
+      // Parse data rows
+      const villas = [];
+      for (let i = 1; i < lines.length; i++) {
+        const values = parseLine(lines[i], delimiter);
+
+        // Skip empty rows
+        if (values.every(v => !v.trim())) {
+          continue;
+        }
+
+        try {
+          const villa = buildVillaObject(headers, values);
+          villas.push(villa);
+        } catch (err) {
+          throw new Error(`Error parsing row ${i + 1}: ${err.message}`);
+        }
+      }
+
+      if (villas.length === 0) {
+        throw new Error('No valid villa data found.');
+      }
+
+      return { villas };
+    }
+
+    function convertToJSON() {
+      const inputEl = document.getElementById('input');
+      const outputEl = document.getElementById('output');
+      const inputText = inputEl.value.trim();
+
+      if (!inputText) {
+        showStatus('input-status', 'Please paste your spreadsheet data first.', 'error');
+        return;
+      }
+
+      try {
+        const data = parseSpreadsheet(inputText);
+        const json = JSON.stringify(data, null, 2);
+        outputEl.value = json;
+
+        showStatus('input-status', `✓ Successfully converted ${data.villas.length} villa${data.villas.length === 1 ? '' : 's'}!`, 'success');
+      } catch (err) {
+        showStatus('input-status', `Error: ${err.message}`, 'error');
+        outputEl.value = '';
+      }
+    }
+
+    async function copyToClipboard() {
+      const outputEl = document.getElementById('output');
+      const text = outputEl.value;
+
+      if (!text) {
+        showStatus('output-status', 'No JSON to copy. Convert your data first.', 'error');
+        return;
+      }
+
+      try {
+        await navigator.clipboard.writeText(text);
+        showStatus('output-status', '✓ JSON copied to clipboard!', 'success');
+      } catch (err) {
+        // Fallback for older browsers
+        outputEl.select();
+        document.execCommand('copy');
+        showStatus('output-status', '✓ JSON copied to clipboard!', 'success');
+      }
+    }
+
+    // Allow Ctrl/Cmd+Enter to convert
+    document.getElementById('input').addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+        convertToJSON();
+      }
+    });
+  </script>
+</body>
+</html>

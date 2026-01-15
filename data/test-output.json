@@ -1,0 +1,213 @@
+{
+  "villas": [
+    {
+      "name": "Villa Bini Mapa",
+      "location": "Binibeca, Menorca",
+      "hook": "Walk to sandy beach & restaurants in nice village",
+      "villa_location": "Nice village, walking distance to sandy beach and restaurants",
+      "villa price £": "3950.434783",
+      "airport": "MAH",
+      "day": "25",
+      "flights": "£1,536",
+      "per family calc": "£2,853",
+      "price": "£2,900 per family inc flights",
+      "photo": "https://www.redorka.com/wp-content/uploads/2022/11/Binibeca-324-06-web-scaled.jpg",
+      "amenities": "Pool (not heated); big garden; A/C",
+      "area summary": "Popular with families with small children for its whitewashed charm, turquoise waters, family-friendly beaches and peaceful, laid-back atmosphere. Restaurants, shops and the beach are all within walking distance.",
+      "links": [
+        {
+          "label": "Website",
+          "url": "https://www.oliverstravels.com/spain/menorca/binibeca/villa-trista/"
+        },
+        {
+          "label": "More info",
+          "url": "https://www.redorka.com/en/menorca/villa-mapa/"
+        }
+      ]
+    },
+    {
+      "name": "Heretat de San Joan",
+      "location": "Inland Menorca",
+      "hook": "Same place we went to last time, drive to towns & beaches",
+      "villa_location": "Inland location, drive required to reach towns and beaches",
+      "villa price £": "3913.043478",
+      "airport": "MAH",
+      "day": "25",
+      "flights": "£1,536",
+      "per family calc": "£2,840",
+      "price": "£2,800 per family inc flights",
+      "photo": "https://casaruralmenorca.com/wp-content/uploads/2024/09/Heretat-Sant-Joan-31.webp",
+      "amenities": "Pool (not heated); garden; roof terrace; A/C",
+      "area summary": "Tucked in the lush, hilly heart of Menorca, Ferreries is a quiet, authentic town known for its whitewashed lanes, artisan workshops, and strong local character. It’s an excellent base for exploring both coasts — just a short drive to the calm turquoise coves of Cala Galdana or the wilder, more dramatic beaches of the north. The atmosphere is peaceful and family-friendly, with good local dining and traditional weekly markets showcasing island produce. Surrounded by walking and cycling trails through forests and farmland, it appeals to those who want Menorca’s natural beauty without the resort bustle.",
+      "links": [
+        {
+          "label": "Website",
+          "url": "https://casaruralmenorca.com/en/"
+        },
+        {
+          "label": "Airbnb",
+          "url": "https://www.airbnb.co.uk/rooms/4612629"
+        },
+        {
+          "label": "Instagram",
+          "url": "https://www.instagram.com/p/DTRF5jNDGXG/"
+        }
+      ]
+    },
+    {
+      "name": "Villa Gerani",
+      "location": "Porto Rafael, Sardinia",
+      "hook": "Heated pool in lovely village with restaurants & nice beach",
+      "villa_location": "In village with walking distance to beach and restaurants",
+      "villa price £": "6521.73913",
+      "airport": "OLB",
+      "day": "25",
+      "flights": "£1,083",
+      "per family calc": "£3,257",
+      "price": "£3,300 per family inc flights",
+      "photo": "https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTA3NTM4MjIyNDE0NzEyODAyOA%3D%3D/original/4238a4d1-992c-44ec-98ee-aa778af69501.jpeg?im_w=1200",
+      "amenities": "Heated pool",
+      "area summary": "Porto Rafael is a refined, tranquil alternative to the Costa Smeralda, tucked among granite outcrops and wild greenery, and centered around a pedestrianized Piazzetta. The village offers a sophisticated yet unpretentious atmosphere with exceptional local dining, surrounded by sheltered, shallow-water beaches like Nelson Beach and Cala Martinella. Its boutique marina provides a perfect launchpad for family boat trips to the stunning La Maddalena Archipelago.",
+      "links": [
+        {
+          "label": "Website",
+          "url": "https://villa-gerani.com/en.html"
+        },
+        {
+          "label": "Airbnb",
+          "url": "https://www.airbnb.co.uk/rooms/1075382224147128028?adults=6&check_in=2026-05-25&check_out=2026-06-01&children=4&location=Sardinia%2C%20Italy&search_mode=regular_search&amenities%5B%5D=7&photo_id=1975550446&source_impression_id=p3_1768347119_P386SDmRQqe0mnQ2&previous_page_section_name=1001&federated_search_id=02b024d9-2fce-4dc9-8a1c-8f0bc4a31cd4"
+        }
+      ]
+    },
+    {
+      "name": "Villa Typha 10",
+      "location": "Outside San Pantaleo, Sardinia",
+      "hook": "Pool, tennis, football pitch, gym; 10km to beaches",
+      "villa_location": "10km drive to beaches",
+      "villa price £": "7629.565217",
+      "airport": "OLB",
+      "day": "25",
+      "flights": "£1,083",
+      "per family calc": "£3,626",
+      "price": "£3,600 per family inc flights",
+      "photo": "https://emmavillastore.blob.core.windows.net/villa-typha/villa-typha_foto_fb914.jpg",
+      "amenities": "Pool (unheated), Tennis court, Football pitch, Gym",
+      "area summary": "San Pantaleo is a striking, bohemian mountain village set against dramatic granite peaks, offering an authentic and artistic side of Sardinia. The village revolves around a pretty central piazza lined with independent boutiques, galleries, and some of the island's best local osterias. While it sits in the hills, you are only a 15-minute drive from exceptional beaches like Rena Bianca and Portisco, which provide the wide, shallow sands and calm waters the coast is known for. It’s an ideal base if you want rugged natural scenery and a top-tier food scene away from the more typical tourist trails.",
+      "links": [
+        {
+          "label": "Website",
+          "url": "https://www.emmavillas.com/en/sardegna/villa-typha-10"
+        }
+      ]
+    },
+    {
+      "name": "Dimora del Conicchio",
+      "location": "Capalbio, Tuscany",
+      "hook": "Pool, tennis, football, table tennis; walk to town, drive to beaches",
+      "villa_location": "20 min walk to town, 10 mins to good beaches",
+      "villa price £": "4782.608696",
+      "airport": "PSA",
+      "day": "25",
+      "flights": "£761",
+      "per family calc": "£2,355",
+      "price": "£2,400 per family inc flights",
+      "photo": "https://www.dimoradelconicchio.it/immagini/01.jpg",
+      "amenities": "Pool, Tennis court / football pitch, Table tennis, Darts, Table football",
+      "area summary": "Capalbio is a striking medieval hilltop village in Southern Tuscany, blending historic character with a sophisticated, artistic atmosphere. While the village itself is set inland, the Maremma coastline is just a 10-minute drive away, offering long, expansive stretches of golden sand and uncrowded dunes. For children, the giant mosaic sculptures of the nearby Tarot Garden provide a world-class alternative to the beach, while the local dining scene is built on high-quality, independent Tuscan trattorias. <br> While it lacks the sheltered, bath-water coves of Sardinia, it compensates with more expansive beaches and one of the most imaginative parks in Europe for children.",
+      "links": [
+        {
+          "label": "Website",
+          "url": "https://www.dimoradelconicchio.it/en/index.htm"
+        },
+        {
+          "label": "VRBO (10/10 reviews)",
+          "url": "https://www.vrbo.com/en-gb/p10048632"
+        }
+      ]
+    },
+    {
+      "name": "Capalbio White Villa",
+      "location": "Capalbio, Tuscany Coast",
+      "hook": "Big pool, sauna, indoor hot tub; short drive to nice coast",
+      "villa_location": "Short drive to coast and beaches",
+      "villa price £": "7608.695652",
+      "airport": "PSA",
+      "day": "25",
+      "flights": "£761",
+      "per family calc": "£3,297",
+      "price": "£3,300 per family inc flights",
+      "photo": "https://www.sopranovillas.com/wp-content/uploads/2024/07/Capalbio-white-villa-09.jpeg",
+      "amenities": "Big pool (unheated), sauna, indoor hot tub, turkish bath",
+      "area summary": "Capalbio is a striking medieval hilltop village in Southern Tuscany, blending historic character with a sophisticated, artistic atmosphere. While the village itself is set inland, the Maremma coastline is just a 10-minute drive away, offering long, expansive stretches of golden sand and uncrowded dunes. For children, the giant mosaic sculptures of the nearby Tarot Garden provide a world-class alternative to the beach, while the local dining scene is built on high-quality, independent Tuscan trattorias. <br> While it lacks the sheltered, bath-water coves of Sardinia, it compensates with more expansive beaches and one of the most imaginative parks in Europe for children.",
+      "links": [
+        {
+          "label": "Website",
+          "url": "https://www.sopranovillas.com/property/capalbio-white-villa-tuscany/"
+        }
+      ]
+    },
+    {
+      "name": "La Perla Tra Gli Ulivi",
+      "location": "San Vicenzo / Livorno, Nr Etruscan Coast, Tuscany",
+      "hook": "Pool, cinema room, huge garden, sauna, gym, pool table",
+      "villa_location": "Near Etruscan Coast, drive required for beaches",
+      "villa price £": "10000",
+      "airport": "PSA",
+      "day": "25",
+      "flights": "£761",
+      "per family calc": "£4,094",
+      "price": "£4,100 per family inc flights",
+      "photo": "img/la-perla-villa.png",
+      "amenities": "Pool, Cinema room, Huge garden, Sauna, Gym, Pool table, Hot tub",
+      "area summary": "San Vincenzo is a generic, slightly commercialised seaside resort, lacking character but well-located for nearby sights and activities and exceptional local beaches. You’re only a 10-minute drive from the excellent shallow sands and pine forests of Rimigliano Park, and there is plenty to keep kids entertained nearby, from underground mining trains to a local amusement park. While the area lacks sophistication, it works well as a  gateway to the elite wineries of Bolgheri and the historic landmarks of Pisa and Volterra",
+      "links": [
+        {
+          "label": "Website",
+          "url": "https://www.emmavillas.com/en/toscana/la-perla-tra-gli-ulivi-12"
+        }
+      ]
+    },
+    {
+      "name": "Bastidon",
+      "location": "Hyeres, Provence Coast",
+      "hook": "Heated pool; 15 min walk to nice beach",
+      "villa_location": "15 min walk to beach",
+      "villa price £": "5212",
+      "airport": "MRS",
+      "day": "25",
+      "flights": "£771",
+      "per family calc": "£2,508",
+      "price": "£2,500 per family inc flights",
+      "photo": "https://img.provenceholidays.com/1aee300c-b26f-4f56-8ed7-829df319dd00/1440w960c?sig=dcb012ca7bf704b6895f8148538ffc376b99c597029632779a666036dc733ac4",
+      "amenities": "Heated pool, table football",
+      "area summary": "Hyères is a refined, under-the-radar alternative to the glitzy French Riviera, where Victorian grandeur meets wild, protected nature. The town sits at the gateway to the car-free Golden Islands, including Porquerolles and the wilder Port-Cros, where families can cycle through pine forests to reach pristine, turquoise coves. The local food scene is exceptionally authentic, centered around high-quality independent cafes in the medieval old town and beach-side gardens serving fresh, local Provencal cuisine. While the village and islands feel secluded and low-density, the peninsula offers some of the best shallow-water beaches in the Mediterranean, making it a perfect match for a multi-generational group seeking character without the commercial crowds.",
+      "links": [
+        {
+          "label": "Website",
+          "url": "https://www.provenceholidays.com/en/holiday-rental/hyeres-bastidon"
+        }
+      ]
+    },
+    {
+      "name": "Le Mas de la Garde",
+      "location": "La Garde-Freinet, 20-30 mins inland from Cote D'Azur",
+      "hook": "Heated pool, tennis court, sauna; 20 mins to coast",
+      "villa_location": "30 minute drive to coast and beaches; 5 mins to town",
+      "villa price £": "6187",
+      "airport": "MRS",
+      "day": "25",
+      "flights": "£771",
+      "per family calc": "£2,833",
+      "price": "£2,800 per family inc flights",
+      "photo": "https://img.provenceholidays.com/93646f04-14f9-4e55-72e2-5af6f35cda00/1440w960c?sig=017e2ff264b0c08210c64079f90ec85bd4ce0271abdd7c791bcf83945825dc80",
+      "amenities": "Pool (heated), Tennis court, Sauna",
+      "area summary": "La Garde-Freinet is a striking medieval hilltop village tucked away in the Maures Mountains, offering a rugged and artistic alternative to the coastal Riviera. The town centers around a pretty piazza with high-quality independent cafes and artisan boutiques, surrounded by dense chestnut and oak forests. While the atmosphere is sophisticated and unpretentious, the coast is a 30-minute mountain drive away, making it better suited for those who value privacy and scenic hiking over easy beach access. For kids, the nearby ruins of Fort Freinet and local turtle sanctuaries provide great adventure away from the sand.",
+      "links": [
+        {
+          "label": "Website",
+          "url": "https://www.provenceholidays.com/en/holiday-rental/cote-dazur-french-riviera-le-mas-de-la-garde#location"
+        }
+      ]
+    }
+  ]
+}

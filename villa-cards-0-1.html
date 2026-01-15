@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Villa Selection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #fafafa;
+            color: #1a1a1a;
+            line-height: 1.5;
+            padding: 2rem 1rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .villas-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .villa-card {
+            width: 300px;
+            background: #ffffff;
+            overflow: hidden;
+        }
+        
+        .villa-image-placeholder {
+            width: 100%;
+            aspect-ratio: 3/2;
+            background: #e5e5e5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 0.875rem;
+        }
+        
+        .villa-content {
+            padding: 1rem;
+        }
+        
+        .villa-name {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 0.25rem;
+        }
+        
+        .villa-location-wrapper {
+            margin-bottom: 0.75rem;
+        }
+        
+        .villa-location {
+            color: #666;
+            font-size: 0.8125rem;
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            cursor: pointer;
+        }
+        
+        .location-text {
+            text-decoration: underline;
+            text-decoration-style: dotted;
+            text-underline-offset: 3px;
+        }
+        
+        .info-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 16px;
+            height: 16px;
+            background: #e5e5e5;
+            border-radius: 50%;
+            font-size: 0.625rem;
+            font-weight: 600;
+            color: #666;
+            flex-shrink: 0;
+        }
+        
+        .location-tooltip {
+            display: none;
+            position: absolute;
+            top: calc(100% + 0.5rem);
+            left: 0;
+            background: #2a2a2a;
+            color: white;
+            padding: 1rem;
+            font-size: 0.8125rem;
+            line-height: 1.7;
+            width: 280px;
+            z-index: 10;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .location-tooltip.active {
+            display: block;
+        }
+        
+        /* Desktop: hover to show */
+        @media (hover: hover) {
+            .villa-location:hover .location-tooltip {
+                display: block;
+            }
+        }
+        
+        .location-tooltip-title {
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            font-size: 0.875rem;
+        }
+        
+        .location-scores {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .location-scores li {
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .location-scores li:last-child {
+            margin-bottom: 0;
+        }
+        
+        .score-label {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .score-value {
+            color: white;
+            font-weight: 500;
+        }
+        
+        .villa-hook {
+            font-size: 0.875rem;
+            color: #333;
+            line-height: 1.5;
+            margin-bottom: 0.75rem;
+        }
+        
+        .villa-price {
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 0.875rem;
+        }
+        
+        .expand-btn {
+            background: transparent;
+            border: 1px solid #1a1a1a;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8125rem;
+            color: #1a1a1a;
+            transition: all 0.2s;
+            width: 100%;
+            font-weight: 500;
+        }
+        
+        .expand-btn:hover {
+            background: #1a1a1a;
+            color: white;
+        }
+        
+        .villa-details {
+            display: none;
+            padding: 1rem;
+            background: #f5f5f5;
+            font-size: 0.875rem;
+            line-height: 1.7;
+        }
+        
+        .villa-details.expanded {
+            display: block;
+        }
+        
+        .details-section {
+            margin-bottom: 1rem;
+        }
+        
+        .details-section:last-child {
+            margin-bottom: 0;
+        }
+        
+        .details-title {
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+            color: #999;
+        }
+        
+        .details-text {
+            font-size: 0.875rem;
+            line-height: 1.7;
+            color: #333;
+        }
+        
+        .details-link {
+            color: #1a1a1a;
+            text-decoration: none;
+            border-bottom: 1px solid #1a1a1a;
+            font-weight: 500;
+        }
+        
+        .details-link:hover {
+            opacity: 0.6;
+        }
+        
+        @media (max-width: 420px) {
+            .villa-card {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="villas-grid">
+            <div class="villa-card">
+                <div class="villa-image-placeholder">Villa Photo</div>
+                <div class="villa-content">
+                    <h3 class="villa-name">Villa Bini Mapa</h3>
+                    <div class="villa-location-wrapper">
+                        <div class="villa-location" onclick="toggleTooltip(this, event)">
+                            <span class="location-text">Binibeca, Menorca</span>
+                            <span class="info-icon">i</span>
+                            <div class="location-tooltip">
+                                <div class="location-tooltip-title">Location Score 4.5/5</div>
+                                <ul class="location-scores">
+                                    <li><span class="score-label">Beach quality</span> <span class="score-value">4.8/5</span></li>
+                                    <li><span class="score-label">Sea conditions</span> <span class="score-value">5.0/5</span></li>
+                                    <li><span class="score-label">Weather</span> <span class="score-value">4.5/5</span></li>
+                                    <li><span class="score-label">Crowdedness</span> <span class="score-value">4.8/5</span></li>
+                                    <li><span class="score-label">Character</span> <span class="score-value">5.0/5</span></li>
+                                    <li><span class="score-label">Amenities</span> <span class="score-value">3.0/5</span></li>
+                                    <li><span class="score-label">Local attractions</span> <span class="score-value">4.0/5</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="villa-hook">Modern white villa, walk to beach & restaurants</p>
+                    <div class="villa-price">£3,300 inc flights</div>
+                    <button class="expand-btn" onclick="toggleDetails(this)">View details</button>
+                </div>
+                <div class="villa-details">
+                    <div class="details-section">
+                        <div class="details-title">The Basics</div>
+                        <div class="details-text">3 beds, 2 baths • Sleeps 6 • Private pool (unheated) • 5min walk to beach • In village center</div>
+                    </div>
+                    <div class="details-section">
+                        <div class="details-title">The Vibe</div>
+                        <div class="details-text">Clean-lined contemporary villa with a large private pool and gardens. You're right in Binibeca village so restaurants and the cove are walkable. The pool isn't heated but May should be warm enough.</div>
+                    </div>
+                    <div class="details-section">
+                        <div class="details-text"><a href="#" class="details-link">View booking page</a></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="villa-card">
+                <div class="villa-image-placeholder">Villa Photo</div>
+                <div class="villa-content">
+                    <h3 class="villa-name">Casa Pitiusa</h3>
+                    <p class="villa-location">Punta Prima, Menorca</p>
+                    <p class="villa-hook">Seafront terrace, steps from sandy beach</p>
+                    <div class="villa-price">£3,100 inc flights</div>
+                    <button class="expand-btn" onclick="toggleDetails(this)">View details</button>
+                </div>
+                <div class="villa-details">
+                    <div class="details-section">
+                        <div class="details-title">The Basics</div>
+                        <div class="details-text">4 beds, 2 baths • Sleeps 8 • No pool • Beachfront • 2min to restaurants</div>
+                    </div>
+                    <div class="details-section">
+                        <div class="details-title">The Vibe</div>
+                        <div class="details-text">Right on the seafront with a huge terrace overlooking Punta Prima beach. No pool but you're literally steps from the sand. More traditional Menorcan style, slightly dated but the location is unbeatable.</div>
+                    </div>
+                    <div class="details-section">
+                        <div class="details-text"><a href="#" class="details-link">View booking page</a></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="villa-card">
+                <div class="villa-image-placeholder">Villa Photo</div>
+                <div class="villa-content">
+                    <h3 class="villa-name">Casa das Dunas</h3>
+                    <p class="villa-location">Comporta, Portugal</p>
+                    <p class="villa-hook">Designer beach house, bike to endless sand</p>
+                    <div class="villa-price">£4,200 inc flights</div>
+                    <button class="expand-btn" onclick="toggleDetails(this)">View details</button>
+                </div>
+                <div class="villa-details">
+                    <div class="details-section">
+                        <div class="details-title">The Basics</div>
+                        <div class="details-text">4 beds, 3 baths • Sleeps 8 • Private heated pool • 10min bike to beach • Includes bikes</div>
+                    </div>
+                    <div class="details-section">
+                        <div class="details-title">The Vibe</div>
+                        <div class="details-text">Beautifully designed modern villa with minimalist interiors and a heated pool. The Comporta aesthetic at its best. Bikes included for riding through pine forests to the beach. Pricier but absolutely worth it if budget allows.</div>
+                    </div>
+                    <div class="details-section">
+                        <div class="details-text"><a href="#" class="details-link">View booking page</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleDetails(button) {
+            const card = button.closest('.villa-card');
+            const details = card.querySelector('.villa-details');
+            
+            if (details.classList.contains('expanded')) {
+                details.classList.remove('expanded');
+                button.textContent = 'View details';
+            } else {
+                details.classList.add('expanded');
+                button.textContent = 'Close details';
+            }
+        }
+        
+        function toggleTooltip(element, event) {
+            event.stopPropagation();
+            const tooltip = element.querySelector('.location-tooltip');
+            
+            // Close all other tooltips first
+            document.querySelectorAll('.location-tooltip.active').forEach(t => {
+                if (t !== tooltip) {
+                    t.classList.remove('active');
+                }
+            });
+            
+            // Toggle this tooltip
+            tooltip.classList.toggle('active');
+        }
+        
+        // Close tooltip when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.villa-location')) {
+                document.querySelectorAll('.location-tooltip.active').forEach(t => {
+                    t.classList.remove('active');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

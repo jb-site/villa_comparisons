@@ -1,0 +1,142 @@
+{
+  "Cannigione, Sardinia": {
+    "overall": 4.5,
+    "Beach quality": 4.7,
+    "Sea conditions": 4.8,
+    "Weather": 4.7,
+    "Crowdedness": 4.5,
+    "Character": 4.5,
+    "Amenities": 4.0,
+    "Local attractions": 4.0
+  },
+  "Binibeca, Menorca": {
+    "overall": 4.4,
+    "Beach quality": 4.8,
+    "Sea conditions": 5.0,
+    "Weather": 4.5,
+    "Crowdedness": 4.8,
+    "Character": 5.0,
+    "Amenities": 3.0,
+    "Local attractions": 4.0
+  },
+  "Punta Prima, Menorca": {
+    "overall": 4.4,
+    "Beach quality": 4.8,
+    "Sea conditions": 5.0,
+    "Weather": 4.5,
+    "Crowdedness": 4.8,
+    "Character": 5.0,
+    "Amenities": 3.0,
+    "Local attractions": 4.0
+  },
+  "Capalbio, Tuscany": {
+    "overall": 4.1,
+    "Beach quality": 4.0,
+    "Sea conditions": 4.0,
+    "Weather": 4.2,
+    "Crowdedness": 4.5,
+    "Character": 5.0,
+    "Amenities": 3.5,
+    "Local attractions": 4.0
+  },
+  "Comporta, Portugal": {
+    "overall": 4.0,
+    "Beach quality": 4.8,
+    "Sea conditions": 3.8,
+    "Weather": 3.5,
+    "Crowdedness": 4.5,
+    "Character": 5.0,
+    "Amenities": 4.0,
+    "Local attractions": 3.5
+  },
+  "Hyeres, French Riviera": {
+    "overall": 3.9,
+    "Beach quality": 3.8,
+    "Sea conditions": 4.0,
+    "Weather": 4.5,
+    "Crowdedness": 3.5,
+    "Character": 3.5,
+    "Amenities": 4.0,
+    "Local attractions": 4.0
+  },
+  "Korcula, Croatia": {
+    "overall": 3.8,
+    "Beach quality": 2.5,
+    "Sea conditions": 4.5,
+    "Weather": 4.5,
+    "Crowdedness": 4.0,
+    "Character": 4.0,
+    "Amenities": 4.0,
+    "Local attractions": 3.5
+  },
+  "Split, Croatia": {
+    "overall": 3.5,
+    "Beach quality": 2.0,
+    "Sea conditions": 4.5,
+    "Weather": 4.5,
+    "Crowdedness": 2.5,
+    "Character": 2.5,
+    "Amenities": 5.0,
+    "Local attractions": 4.0
+  },
+  "Omis, Croatia": {
+    "overall": 3.5,
+    "Beach quality": 2.5,
+    "Sea conditions": 4.5,
+    "Weather": 4.5,
+    "Crowdedness": 3.5,
+    "Character": 3.0,
+    "Amenities": 3.5,
+    "Local attractions": 3.5
+  },
+  "Trogir, Croatia": {
+    "overall": 3.5,
+    "Beach quality": 2.0,
+    "Sea conditions": 4.5,
+    "Weather": 4.5,
+    "Crowdedness": 2.5,
+    "Character": 3.0,
+    "Amenities": 4.5,
+    "Local attractions": 4.0
+  },
+  "Cap Ferret, Aquitaine": {
+    "overall": 3.5,
+    "Beach quality": 4.5,
+    "Sea conditions": 3.5,
+    "Weather": 2.5,
+    "Crowdedness": 4.5,
+    "Character": 4.5,
+    "Amenities": 3.5,
+    "Local attractions": 4.0
+  },
+  "Brela, Makarska Riviera": {
+    "overall": 3.4,
+    "Beach quality": 3.0,
+    "Sea conditions": 4.5,
+    "Weather": 4.5,
+    "Crowdedness": 3.0,
+    "Character": 3.0,
+    "Amenities": 3.5,
+    "Local attractions": 3.0
+  },
+  "Bidart, Basque": {
+    "overall": 3.3,
+    "Beach quality": 3.5,
+    "Sea conditions": 2.5,
+    "Weather": 2.5,
+    "Crowdedness": 3.5,
+    "Character": 3.5,
+    "Amenities": 4.5,
+    "Local attractions": 4.0
+  },
+  "Sagres, Algarve": {
+    "overall": 2.9,
+    "Beach quality": 3.5,
+    "Sea conditions": 2.0,
+    "Weather": 2.0,
+    "Crowdedness": 4.5,
+    "Character": 4.0,
+    "Amenities": 3.5,
+    "Local attractions": 2.5
+  }
+}

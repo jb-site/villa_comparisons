@@ -1,0 +1,571 @@
+/* ==========================================================================
+   VILLA COMPARISON - Warm Mediterranean Theme
+
+   TO CHANGE COLORS/FONTS: Edit the :root section below
+   ========================================================================== */
+
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  /* COLORS - Edit these to change the whole site's palette */
+  --color-background: #FAF7F4;        /* Page background (warm cream) */
+  --color-surface: #FFFFFF;           /* Card background */
+  --color-surface-muted: #F5F1ED;     /* Expanded details background */
+  --color-primary: #C45D3E;           /* Terracotta accent */
+  --color-primary-dark: #A64B2F;      /* Darker terracotta for hover */
+  --color-primary-light: #E8D5CF;     /* Light terracotta wash */
+  --color-text: #2D2926;              /* Main text (warm charcoal) */
+  --color-text-secondary: #6B625A;    /* Secondary text */
+  --color-text-muted: #9A928A;        /* Labels, captions */
+  --color-link: #5B8A9A;              /* Aegean blue for links */
+
+  /* FONTS - Edit these to change typography */
+  --font-heading: 'Libre Baskerville', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+
+  /* SPACING & SIZING - Adjust card dimensions here */
+  --card-width: 300px;
+  --card-gap: 1rem;
+  --card-radius: 8px;
+}
+
+/* ==========================================================================
+   BASE STYLES
+   ========================================================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--color-background);
+  color: var(--color-text);
+  line-height: 1.5;
+  padding: 2rem 1rem;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ==========================================================================
+   PAGE HEADER
+   ========================================================================== */
+
+.page-header {
+  text-align: left;
+  margin-bottom: 2.5rem;
+}
+
+.page-title {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 0.25rem;
+  letter-spacing: -0.02em;
+}
+
+.page-subtitle {
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+}
+
+/* ==========================================================================
+   SORT CONTROLS
+   ========================================================================== */
+
+.sort-controls-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.sort-label {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+.sort-controls {
+  display: flex;
+  justify-content: center;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  background: var(--color-surface);
+  border-radius: 6px;
+  width: fit-content;
+  box-shadow: 0 1px 3px rgba(45, 41, 38, 0.08);
+}
+
+.sort-btn {
+  padding: 0.5rem 0.875rem;
+  min-height: 44px;
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--color-text);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: capitalize;
+  letter-spacing: 0.01em;
+}
+
+.sort-btn:hover {
+  background: var(--color-primary-light);
+}
+
+.sort-btn.active {
+  background: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
+}
+
+.sort-btn:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.sort-arrow {
+  margin-left: 0.25rem;
+  font-size: 0.75rem;
+}
+
+/* ==========================================================================
+   AREA HEADERS (for Area sorting mode)
+   ========================================================================== */
+
+.area-header {
+  width: 100%;
+  grid-column: 1 / -1;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.area-header:first-child {
+  margin-top: 0;
+}
+
+.area-header-text {
+  font-family: var(--font-heading);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--color-primary-light);
+  padding-bottom: 0.375rem;
+}
+
+/* ==========================================================================
+   VILLA GRID
+   ========================================================================== */
+
+.villas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, var(--card-width));
+  gap: var(--card-gap);
+  justify-content: flex-start;
+}
+
+/* ==========================================================================
+   VILLA CARD
+   ========================================================================== */
+
+.villa-card {
+  width: var(--card-width);
+  background: var(--color-surface);
+  border-radius: var(--card-radius);
+  box-shadow: 0 1px 3px rgba(45, 41, 38, 0.08);
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.villa-card:hover {
+  box-shadow: 0 6px 20px rgba(45, 41, 38, 0.15);
+  transform: translateY(-2px);
+}
+
+.villa-card.tooltip-active,
+.villa-card:has(.villa-location:hover) {
+  z-index: 10000;
+}
+
+
+/* ==========================================================================
+   VILLA PHOTO
+   ========================================================================== */
+
+.villa-photo {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  position: relative;
+  background: var(--color-surface-muted);
+  border: 10px solid white;
+}
+
+.villa-photo a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.villa-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+
+/* Placeholder for missing images */
+.villa-photo.photo-error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+}
+
+/* ==========================================================================
+   VILLA CONTENT
+   ========================================================================== */
+
+.villa-content {
+  padding: 1rem;
+}
+
+.villa-name {
+  font-family: var(--font-heading);
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 0.25rem;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+/* ==========================================================================
+   LOCATION WITH TOOLTIP
+   ========================================================================== */
+
+.villa-location-wrapper {
+  margin-bottom: 0.25rem;
+  position: relative;
+}
+
+.villa-location {
+  color: var(--color-text);
+  font-size: 0.875rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  text-align: left;
+}
+
+.location-text {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 3px;
+}
+
+.info-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  background: #e5e5e5;
+  border-radius: 50%;
+  font-size: 0.625rem;
+  font-weight: 600;
+  color: #666;
+  flex-shrink: 0;
+}
+
+/* Tooltip */
+.location-tooltip {
+  display: none;
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  background: var(--color-text);
+  color: white;
+  padding: 1rem;
+  font-size: 0.8125rem;
+  line-height: 1.7;
+  width: 280px;
+  max-width: calc(100vw - 2rem);
+  z-index: 10001;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+@media (min-width: 768px) {
+  .location-tooltip {
+    width: 380px;
+  }
+}
+
+.location-tooltip.active {
+  display: block;
+}
+
+/* Desktop: hover to show */
+@media (hover: hover) {
+  .villa-location:hover + .location-tooltip,
+  .location-tooltip:hover {
+    display: block;
+  }
+}
+
+.location-tooltip-content {
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.area-rating {
+  margin-bottom: 0.5rem;
+}
+
+.area-rating .stars {
+  font-size: 0.5rem;
+}
+
+/* ==========================================================================
+   HOOK LINE
+   ========================================================================== */
+
+.villa-hook {
+  font-size: 0.875rem;
+  color: var(--color-text);
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+}
+
+/* ==========================================================================
+   PRICE
+   ========================================================================== */
+
+.villa-price {
+  font-size: 0.875rem;
+  font-weight: bold;
+  color: var(--color-text);
+  margin-bottom: 1rem;
+}
+
+/* ==========================================================================
+   AMENITIES
+   ========================================================================== */
+
+.villa-amenities {
+  font-size: 0.875rem;
+  color: var(--color-text);
+  margin-bottom: 0.25rem;
+}
+
+/* ==========================================================================
+   VILLA LINKS
+   ========================================================================== */
+
+.villa-links {
+  font-size: 0.875rem;
+  color: var(--color-text);
+}
+
+.villa-links a {
+  color: var(--color-link);
+  text-decoration: none;
+}
+
+.villa-links a:hover {
+  text-decoration: underline;
+}
+
+.link-separator {
+  margin: 0 0.5rem;
+  color: var(--color-text-muted);
+}
+
+/* ==========================================================================
+   ARCHIVED: EXPAND BUTTON
+   ========================================================================== */
+
+/* .expand-btn {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  background: transparent;
+  border: 1.5px solid var(--color-primary);
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--color-primary);
+  transition: all 0.15s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.expand-btn:hover {
+  background: var(--color-primary);
+  color: white;
+}
+
+.expand-btn:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+} */
+
+/* ==========================================================================
+   EXPANDED DETAILS
+   ========================================================================== */
+
+.villa-details {
+  display: none;
+  padding: 1rem;
+  background: var(--color-surface-muted);
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+
+.villa-details.expanded {
+  display: block;
+}
+
+.details-section {
+  margin-bottom: 1rem;
+}
+
+.details-section:last-child {
+  margin-bottom: 0;
+}
+
+.details-title {
+  font-weight: 600;
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.375rem;
+  color: var(--color-text-muted);
+}
+
+.details-text {
+  color: var(--color-text-secondary);
+}
+
+.details-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+}
+
+.details-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: var(--color-link);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+.details-link:hover {
+  text-decoration: underline;
+}
+
+.link-arrow {
+  font-size: 1em;
+}
+
+/* ==========================================================================
+   LOADING & ERROR STATES
+   ========================================================================== */
+
+.loading-state,
+.error-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--color-text-secondary);
+}
+
+.error-state {
+  color: var(--color-primary);
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+
+@media (max-width: 420px) {
+  .page-header {
+    text-align: center;
+  }
+
+  .sort-controls-wrapper {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .sort-label {
+    font-size: 0.8125rem;
+  }
+
+  .sort-controls {
+    gap: 0.125rem;
+  }
+
+  .sort-btn {
+    padding: 0.375rem 0.625rem;
+    font-size: 0.75rem;
+  }
+
+  .villas-grid {
+    grid-template-columns: 1fr;
+    justify-content: center;
+  }
+
+  .villa-card {
+    width: 100%;
+    max-width: var(--card-width);
+  }
+
+  .page-title {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .sort-controls-wrapper {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .sort-controls {
+    flex-direction: column;
+    width: 100%;
+    max-width: 200px;
+  }
+
+  .sort-btn {
+    width: 100%;
+  }
+}
