@@ -316,10 +316,10 @@
 <body>
   <div class="demo-container">
     <div class="demo-header">
-      <h1 class="demo-title">Rich Aegean Blue Gradients</h1>
-      <p class="demo-subtitle">9 gradient variations using Rich Aegean (#4A6B7A)</p>
+      <h1 class="demo-title">Mediterranean Blue & Turquoise Options</h1>
+      <p class="demo-subtitle">13 options: Aegean blue, pool turquoise, and Sardinian sea colors</p>
       <div class="demo-instructions">
-        <strong>Explore:</strong> Each gradient combines the deep Mediterranean blue with different directions and destination colors. Some fade to warm tones (sand/cream), others stay cool (white/light blue), and some use softer starting points.
+        <strong>Explore:</strong> Deep blues, bright pool turquoise (likely too vibrant), and refined Sardinian sea colors. Both solid backgrounds and gradients included.
       </div>
     </div>
 
@@ -343,6 +343,13 @@
           <option value="aegean-subtle">Subtle Aegean — Lighter Start</option>
           <option value="aegean-three-stop">Three-Stop Gradient — Blue → Mid-Blue → Sand</option>
           <option value="aegean-radial">Radial Gradient — Blue Center</option>
+        </optgroup>
+
+        <optgroup label="━━━ TURQUOISE OPTIONS ━━━">
+          <option value="pool-turquoise">Swimming Pool Turquoise — Solid (#40E0D0)</option>
+          <option value="pool-turquoise-gradient">Pool Turquoise to Sand — Gradient</option>
+          <option value="sardinian-turquoise">Sardinian Sea — Solid (#7AB8B8)</option>
+          <option value="sardinian-turquoise-gradient">Sardinian Sea to Sand — Gradient</option>
         </optgroup>
       </select>
     </div>
@@ -417,6 +424,30 @@
         gradient: 'linear-gradient(135deg, #4A6B7A 0%, #7A9AAA 50%, #F2EBE1 100%)',
         description: 'Multi-stop gradient with transition through mid-tone',
         className: 'bg-aegean-three-stop'
+      },
+      'pool-turquoise': {
+        title: 'Swimming Pool Turquoise — Solid',
+        gradient: '#40E0D0',
+        description: 'Bright pool blue (likely too vibrant)',
+        className: 'bg-pool-turquoise'
+      },
+      'pool-turquoise-gradient': {
+        title: 'Pool Turquoise to Sand — Gradient',
+        gradient: 'linear-gradient(135deg, #40E0D0 0%, #F2EBE1 100%)',
+        description: 'Bright turquoise fading to warm sand',
+        className: 'bg-pool-turquoise-gradient'
+      },
+      'sardinian-turquoise': {
+        title: 'Sardinian Sea — Solid',
+        gradient: '#7AB8B8',
+        description: 'Refined, muted turquoise-teal',
+        className: 'bg-sardinian-turquoise'
+      },
+      'sardinian-turquoise-gradient': {
+        title: 'Sardinian Sea to Sand — Gradient',
+        gradient: 'linear-gradient(135deg, #7AB8B8 0%, #F2EBE1 100%)',
+        description: 'Soft turquoise-teal to warm sand',
+        className: 'bg-sardinian-turquoise-gradient'
       }
     };
 
