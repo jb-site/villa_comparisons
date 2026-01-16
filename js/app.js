@@ -284,7 +284,6 @@ function renderVillas() {
 }
 
 function createVillaCard(villa, index) {
-  const locationScores = locationsData[villa.location];
   const firstLink = villa.links && villa.links.length > 0 ? villa.links[0].url : null;
 
   return `
