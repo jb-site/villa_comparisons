@@ -23,7 +23,6 @@ const CONFIG = {
 
 // Store loaded data
 let villasData = [];
-let locationsData = {};
 let currentSortMode = 'rating';
 let currentSortReversed = false;
 
@@ -225,21 +224,17 @@ async function loadData() {
     const { sheetId, gid } = parseGoogleSheetsUrl(CONFIG.googleSheetsUrl);
     const exportUrl = buildExportUrl(sheetId, gid);
 
-    // Fetch from both Google Sheets (TSV) and locations.json
-    const [sheetsResponse, locationsResponse] = await Promise.all([
-      fetch(exportUrl),
-      fetch('./data/locations.json')
-    ]);
+    // Fetch from Google Sheets
+    const sheetsResponse = await fetch(exportUrl);
 
-    if (!sheetsResponse.ok || !locationsResponse.ok) {
-      throw new Error('Failed to load data files');
+    if (!sheetsResponse.ok) {
+      throw new Error('Failed to load data from Google Sheets');
     }
 
     // Parse TSV data from Google Sheets
     const tsvData = await sheetsResponse.text();
     const parsedData = parseSpreadsheet(tsvData);
 
-    locationsData = await locationsResponse.json();
     villasData = parsedData.villas;
 
     renderVillas();

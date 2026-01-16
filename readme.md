@@ -59,17 +59,25 @@ Each villa belongs to a location/area. Location scores are available:
 ## Implementation
 
 ### Current Architecture
-The site is built as a data-driven static website with three separate concerns:
+The site is built as a data-driven static website that fetches villa data directly from Google Sheets:
 
 ```
-summary_page/
+/
 ├── index.html           # Minimal HTML structure
 ├── css/styles.css       # All styling with variables at top
-├── js/app.js            # Data loading and rendering
-└── data/
-    ├── villas.json      # Villa content (edit this to add/update villas)
-    └── locations.json   # Location scores (14 Mediterranean destinations)
+├── js/app.js            # Data loading, Google Sheets parsing, and rendering
+├── data/
+│   ├── locations.json   # Location scores (14 Mediterranean destinations)
+│   └── archive/         # Old static data files (no longer used)
+└── tools/
+    └── spreadsheet-converter.html  # Backup tool for testing/offline use
 ```
+
+**Data Flow:**
+1. Google Sheets (published to web) → Contains all villa data
+2. Website fetches TSV export directly from Google Sheets on page load
+3. [js/app.js](js/app.js) parses and renders the data
+4. Updates to Google Sheet appear immediately on page refresh
 
 ### Design Aesthetic: Clean Mediterranean
 - Warm cream background (#FAF7F4)
@@ -82,16 +90,18 @@ summary_page/
 
 ### How to Update Content
 
-**Add or edit a villa (Google Sheets Workflow - Recommended):**
-1. Open your Google Sheets with villa data
-2. Add/edit villa rows (supports multiple booking links per villa)
-3. Select all cells and copy (Ctrl+A or Cmd+A, then Ctrl+C or Cmd+C)
-4. Open `tools/spreadsheet-converter.html` in your web browser
-5. Paste the spreadsheet content into the input box
-6. Click "Convert to JSON"
-7. Copy the generated JSON
-8. Open `data/villas.json` and paste to replace all content
-9. Save `villas.json` and refresh your website
+**Updating Villa Data (Automated - No Manual Steps!):**
+1. Open your Google Sheet with villa data
+2. Edit villa information directly in the sheet
+3. Save the sheet (Ctrl+S or Cmd+S)
+4. Refresh the website - changes appear immediately!
+
+That's it! No copying, pasting, or file editing needed. The website fetches data directly from Google Sheets.
+
+**Google Sheets Setup:**
+1. Go to **File → Share → Publish to web** in your Google Sheet
+2. Choose "Entire Document" and click **Publish**
+3. Copy the sheet URL and paste it into `googleSheetsUrl` in [js/app.js:18](js/app.js#L18)
 
 **Google Sheets Column Structure:**
 
@@ -101,6 +111,8 @@ summary_page/
 | `location` | ✓ Yes | Location | "Binibeca, Menorca" |
 | `hook` | ✓ Yes | One-line description | "Walk to sandy beach & restaurants" |
 | `villa_location` | Optional | Detailed location info | "Walking distance to beach" |
+| `area_rating` | Optional | Star rating for area (1-5) | "5" |
+| `area summary` | Optional | Area description for tooltip | "Binibeca is a whitewashed coastal village..." |
 | `price` | ✓ Yes | Price | "£3,300 per family inc flights" |
 | `photo` | ✓ Yes | Image URL or path | "https://..." or "img/villa.jpg" |
 | `amenities` | ✓ Yes | Comma-separated | "Pool, Garden, BBQ" |
@@ -110,59 +122,48 @@ summary_page/
 | `link_2_url` | Optional | Second booking link URL | "https://..." |
 | `link_3_label` | Optional | Third booking link label | "VRBO" |
 | `link_3_url` | Optional | Third booking link URL | "https://..." |
+| `excluded` | Optional | Set to "TRUE" to hide villa | "TRUE" |
 
 Add more link columns as needed (link_4, link_5, etc.). Leave empty if not needed.
 
-**Converter tool location:** `tools/spreadsheet-converter.html` (open in any browser)
-
-**Alternative - Direct JSON editing:**
-1. Open `data/villas.json`
-2. Copy an existing villa entry
-3. Update the strings (all fields are plain text):
-   ```json
-   {
-     "name": "Villa Name",
-     "location": "Place, Region",
-     "hook": "One line description",
-     "price": "£3,300 inc flights",
-     "photo": "https://image-url...",
-     "amenities": "Pool, Garden, BBQ",
-     "links": [
-       { "label": "Booking site", "url": "https://..." },
-       { "label": "More photos", "url": "https://..." }
-     ]
-   }
-   ```
-4. Save and refresh browser
-
-**Note**: The `basics` and `vibe` fields are no longer used (expand/collapse functionality archived). Use `hook` for short description and `amenities` for key features.
+**Backup Tool:**
+[tools/spreadsheet-converter.html](tools/spreadsheet-converter.html) can still be used to:
+- Generate JSON backups of your data
+- Test data parsing before publishing
+- Work offline with villa data
 
 **Change colors or fonts:**
-1. Open `css/styles.css`
+1. Open [css/styles.css](css/styles.css)
 2. Edit the `:root` section at the top
 3. Change CSS variables (colors, fonts, spacing)
 4. Save and refresh browser
 
 **Why this approach:**
-- Simpler than Notion for this specific use case
-- No login required to view
+- Completely automated - edit Google Sheet and see changes immediately
+- No manual copy/paste/save workflow
+- Familiar Google Sheets interface for data editing
 - Can be shared via URL (GitHub Pages)
-- All data in one easy-to-edit JSON file
 - No frameworks or build tools needed
+- Converter tool available as backup for offline work
 
 ### Testing Locally
 ```bash
-cd summary_page
 python3 -m http.server 8080
 # Open http://localhost:8080
 ```
+
+**Requirements:**
+- Google Sheet must be published to web (File → Share → Publish to web)
+- Internet connection (to fetch from Google Sheets)
 
 ### Deployment
 **GitHub Pages:**
 1. Push to GitHub repository
 2. Enable GitHub Pages in repository settings
-3. Set source to main branch, /summary_page folder
-4. Share the URL: `https://username.github.io/repo-name/summary_page/`
+3. Set source to main branch, root folder (or specific folder if needed)
+4. Share the URL: `https://username.github.io/repo-name/`
+
+**Note:** The Google Sheets integration works on GitHub Pages - no additional configuration needed. Just make sure your Google Sheet remains published to web.
 
 ### Mobile Optimization
 - **Landscape iPhone (667x375)**: 2 cards side-by-side
@@ -170,20 +171,22 @@ python3 -m http.server 8080
 - Tested and working on both orientations
 
 ### Features
+- ✓ **Automated content updates** - Edit Google Sheet → Refresh website (no manual steps)
 - ✓ Photo-first card layout (3:2 aspect ratio)
-- ✓ Location tooltips with 7 scoring categories (click/hover)
+- ✓ Location tooltips with area ratings and descriptions
 - ✓ All content visible upfront (no expand/collapse)
 - ✓ Three-group information architecture with strategic spacing
 - ✓ Unified color scheme (one text color + blue links)
 - ✓ Amenities field for quick scanning of key features
-- ✓ Flexible booking links (1-3 URLs per villa with custom labels, inline with pipes)
+- ✓ Flexible booking links (unlimited URLs per villa with custom labels, inline with pipes)
 - ✓ Responsive mobile design (2 cards on landscape, 1 on portrait)
 - ✓ No build tools or frameworks
-- ✓ Easy to update content (just edit JSON)
+- ✓ Direct Google Sheets integration with TSV parsing
 
 ## Design Philosophy
 
 **Simplicity over decoration**: Every visual element must serve the decision-making process. Removed:
+
 - Orange gradient borders (visual noise)
 - Photo zoom effects (distraction)
 - Quote marks and italics (harder to read)
