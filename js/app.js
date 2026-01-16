@@ -319,43 +319,6 @@ function createVillaCard(villa, index) {
           ${createLinksHtml(villa.links)}
         </div>
       </div>
-
-      <!-- ARCHIVED: View details functionality
-      <div class="villa-content">
-        <h3 class="villa-name">${villa.name}</h3>
-
-        <div class="villa-location-wrapper">
-          <button class="villa-location" onclick="toggleTooltip(event)">
-            <span class="location-text">${villa.location}</span>
-            <span class="info-icon">i</span>
-          </button>
-          ${locationScores ? createLocationTooltip(villa.location, locationScores) : ''}
-        </div>
-
-        <p class="villa-hook">${villa.hook}</p>
-        <div class="villa-price">${villa.price}</div>
-
-        <button class="expand-btn" onclick="toggleDetails(event)">
-          View details
-        </button>
-      </div>
-
-      <div class="villa-details">
-        <div class="details-section">
-          <div class="details-title">The Basics</div>
-          <p class="details-text">${villa.basics}</p>
-        </div>
-
-        <div class="details-section">
-          <div class="details-title">The Vibe</div>
-          <p class="details-text">${villa.vibe}</p>
-        </div>
-
-        <div class="details-section details-links">
-          ${createLinksHtml(villa.links)}
-        </div>
-      </div>
-      -->
     </article>
   `;
 }
