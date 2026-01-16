@@ -519,52 +519,11 @@
         const outputEl = document.getElementById('output');
         outputEl.value = json;
 
-        // Copy to clipboard with improved fallback
-        let copySuccess = false;
-
-        // Try modern clipboard API first
-        try {
-          await navigator.clipboard.writeText(json);
-          copySuccess = true;
-          console.log('Copied using clipboard API');
-        } catch (clipboardErr) {
-          console.log('Clipboard API failed, trying fallback:', clipboardErr);
-
-          // Fallback: use the output textarea to copy
-          try {
-            // Remove readonly temporarily to ensure selection works
-            const wasReadonly = outputEl.readOnly;
-            outputEl.readOnly = false;
-
-            // Focus and select
-            outputEl.focus();
-            outputEl.select();
-            outputEl.setSelectionRange(0, outputEl.value.length);
-
-            // Try to copy
-            copySuccess = document.execCommand('copy');
-            console.log('execCommand copy result:', copySuccess);
-
-            // Restore readonly
-            outputEl.readOnly = wasReadonly;
-
-            // Deselect
-            window.getSelection().removeAllRanges();
-          } catch (err) {
-            console.error('Fallback copy failed:', err);
-            copySuccess = false;
-          }
-        }
-
         // Save the URL for next time
         saveSheetsUrl(url);
 
-        // Show success message
-        if (copySuccess) {
-          showStatus('quick-status', `✓ Success! Fetched and copied ${data.villas.length} villa${data.villas.length === 1 ? '' : 's'} to clipboard!`, 'success');
-        } else {
-          showStatus('quick-status', `⚠️ Fetched ${data.villas.length} villa${data.villas.length === 1 ? '' : 's'}. Please use the "Copy JSON" button below to copy.`, 'error');
-        }
+        // Show success message with instruction to copy
+        showStatus('quick-status', `✓ Success! Fetched ${data.villas.length} villa${data.villas.length === 1 ? '' : 's'}. Now click "Copy JSON" below.`, 'success');
 
       } catch (err) {
         showStatus('quick-status', `Error: ${err.message}`, 'error');
