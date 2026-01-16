@@ -67,17 +67,17 @@ The site is built as a data-driven static website that fetches villa data direct
 ├── css/styles.css       # All styling with variables at top
 ├── js/app.js            # Data loading, Google Sheets parsing, and rendering
 ├── data/
-│   ├── locations.json   # Location scores (14 Mediterranean destinations)
 │   └── archive/         # Old static data files (no longer used)
 └── tools/
     └── spreadsheet-converter.html  # Backup tool for testing/offline use
 ```
 
 **Data Flow:**
-1. Google Sheets (published to web) → Contains all villa data
+1. Google Sheets (published to web) → Contains all villa data (text, images, links, location info)
 2. Website fetches TSV export directly from Google Sheets on page load
 3. [js/app.js](js/app.js) parses and renders the data
 4. Updates to Google Sheet appear immediately on page refresh
+5. No static data files needed - everything comes from Google Sheets
 
 ### Design Aesthetic: Clean Mediterranean
 - Warm cream background (#FAF7F4)
