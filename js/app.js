@@ -4,6 +4,23 @@
    This script loads villa data from JSON and renders the cards.
    ========================================================================== */
 
+// ==========================================================================
+// CONFIGURATION
+// ==========================================================================
+
+const CONFIG = {
+  // Google Sheets URL - get this from your published sheet
+  // Instructions:
+  // 1. Open your Google Sheet
+  // 2. File → Share → Publish to web
+  // 3. Choose "Entire Document" and click Publish
+  // 4. Copy the URL and paste it below
+  googleSheetsUrl: 'https://docs.google.com/spreadsheets/d/1sB-0CUubMwKEb69M4-FS8MIrsU0misZdurImYb-2TqU',
+
+  // Required fields for validation
+  requiredFields: ['name', 'location', 'price', 'photo', 'hook', 'amenities']
+};
+
 // Store loaded data
 let villasData = [];
 let locationsData = {};
@@ -11,36 +28,236 @@ let currentSortMode = 'rating';
 let currentSortReversed = false;
 
 // ==========================================================================
+// GOOGLE SHEETS PARSING
+// ==========================================================================
+
+function parseGoogleSheetsUrl(url) {
+  // Extract sheet ID and gid from various Google Sheets URL formats
+  const sheetIdMatch = url.match(/\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/);
+  if (!sheetIdMatch) {
+    throw new Error('Invalid Google Sheets URL. Please check the URL and try again.');
+  }
+
+  const sheetId = sheetIdMatch[1];
+
+  // Try to extract gid from URL
+  let gid = '0'; // Default to first sheet
+  const gidMatch = url.match(/[#&]gid=([0-9]+)/);
+  if (gidMatch) {
+    gid = gidMatch[1];
+  }
+
+  return { sheetId, gid };
+}
+
+function buildExportUrl(sheetId, gid) {
+  return `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=tsv&gid=${gid}`;
+}
+
+function parseLine(line, delimiter) {
+  // Parser that handles quoted fields and preserves multi-line content
+  const result = [];
+  let current = '';
+  let inQuotes = false;
+
+  for (let i = 0; i < line.length; i++) {
+    const char = line[i];
+    const nextChar = line[i + 1];
+
+    if (char === '"') {
+      // Handle escaped quotes ("")
+      if (inQuotes && nextChar === '"') {
+        current += '"';
+        i++; // Skip next quote
+      } else {
+        // Toggle quote state but don't add the quote to the value
+        inQuotes = !inQuotes;
+      }
+    } else if (char === delimiter && !inQuotes) {
+      result.push(current.trim());
+      current = '';
+    } else {
+      current += char;
+    }
+  }
+
+  result.push(current.trim());
+  return result;
+}
+
+function splitIntoRows(text, delimiter) {
+  // Split text into rows while respecting quoted fields that may contain newlines
+  const rows = [];
+  let currentRow = '';
+  let inQuotes = false;
+
+  for (let i = 0; i < text.length; i++) {
+    const char = text[i];
+    const nextChar = text[i + 1];
+
+    if (char === '"') {
+      // Handle escaped quotes ("")
+      if (nextChar === '"') {
+        currentRow += '""';
+        i++; // Skip next quote
+      } else {
+        inQuotes = !inQuotes;
+        currentRow += char;
+      }
+    } else if (char === '\n' && !inQuotes) {
+      // Only treat newline as row separator if not inside quotes
+      if (currentRow.trim()) {
+        rows.push(currentRow);
+      }
+      currentRow = '';
+    } else if (char === '\r') {
+      // Skip carriage returns (Windows line endings)
+      continue;
+    } else {
+      currentRow += char;
+    }
+  }
+
+  // Add the last row if it exists
+  if (currentRow.trim()) {
+    rows.push(currentRow);
+  }
+
+  return rows;
+}
+
+function buildVillaObject(headers, values) {
+  const villa = {};
+  const links = [];
+
+  // Map basic fields
+  headers.forEach((header, index) => {
+    const value = values[index] || '';
+
+    // Handle link columns separately
+    if (header.startsWith('link_') && header.endsWith('_label')) {
+      // Extract link number
+      const linkNum = header.match(/link_(\d+)_label/)[1];
+      const urlHeader = `link_${linkNum}_url`;
+      const urlIndex = headers.indexOf(urlHeader);
+
+      if (urlIndex !== -1) {
+        const label = value.trim();
+        const url = (values[urlIndex] || '').trim();
+
+        // Only add link if both label and URL are non-empty
+        if (label && url) {
+          links.push({ label, url });
+        }
+      }
+    } else if (!header.startsWith('link_') || !header.endsWith('_url')) {
+      // Add non-link fields directly
+      if (value) {
+        villa[header] = value;
+      }
+    }
+  });
+
+  // Add links array if any links exist
+  if (links.length > 0) {
+    villa.links = links;
+  }
+
+  return villa;
+}
+
+function parseSpreadsheet(text) {
+  // Auto-detect delimiter: tab (Google Sheets) or comma (CSV)
+  const delimiter = text.includes('\t') ? '\t' : ',';
+
+  // Split by newlines while respecting quoted fields
+  const lines = splitIntoRows(text.trim(), delimiter);
+
+  if (lines.length === 0) {
+    throw new Error('No data found in spreadsheet.');
+  }
+
+  if (lines.length === 1) {
+    throw new Error('Only header row found. Please include villa data rows.');
+  }
+
+  // Parse header row
+  const headers = parseLine(lines[0], delimiter).map(h => h.trim().toLowerCase());
+
+  // Validate required fields
+  const missingFields = CONFIG.requiredFields.filter(field => !headers.includes(field));
+  if (missingFields.length > 0) {
+    throw new Error(`Missing required columns: ${missingFields.join(', ')}`);
+  }
+
+  // Parse data rows
+  const villas = [];
+  for (let i = 1; i < lines.length; i++) {
+    const values = parseLine(lines[i], delimiter);
+
+    // Skip empty rows
+    if (values.every(v => !v.trim())) {
+      continue;
+    }
+
+    try {
+      const villa = buildVillaObject(headers, values);
+      villas.push(villa);
+    } catch (err) {
+      throw new Error(`Error parsing row ${i + 1}: ${err.message}`);
+    }
+  }
+
+  if (villas.length === 0) {
+    throw new Error('No valid villa data found.');
+  }
+
+  return { villas };
+}
+
+// ==========================================================================
 // DATA LOADING
 // ==========================================================================
 
 async function loadData() {
   try {
-    const [villasResponse, locationsResponse] = await Promise.all([
-      fetch('./data/villas.json'),
+    // Parse Google Sheets URL and build export URL
+    const { sheetId, gid } = parseGoogleSheetsUrl(CONFIG.googleSheetsUrl);
+    const exportUrl = buildExportUrl(sheetId, gid);
+
+    // Fetch from both Google Sheets (TSV) and locations.json
+    const [sheetsResponse, locationsResponse] = await Promise.all([
+      fetch(exportUrl),
       fetch('./data/locations.json')
     ]);
 
-    if (!villasResponse.ok || !locationsResponse.ok) {
+    if (!sheetsResponse.ok || !locationsResponse.ok) {
       throw new Error('Failed to load data files');
     }
 
-    const villasJson = await villasResponse.json();
+    // Parse TSV data from Google Sheets
+    const tsvData = await sheetsResponse.text();
+    const parsedData = parseSpreadsheet(tsvData);
+
     locationsData = await locationsResponse.json();
-    villasData = villasJson.villas;
+    villasData = parsedData.villas;
 
     renderVillas();
   } catch (error) {
     console.error('Error loading data:', error);
-    showError();
+    showError(error.message);
   }
 }
 
-function showError() {
+function showError(message = '') {
   const grid = document.querySelector('.villas-grid');
+  const detailedMessage = message || 'Unable to load villa data.';
   grid.innerHTML = `
     <div class="error-state">
-      <p>Unable to load villa data. Please refresh the page.</p>
+      <p>${detailedMessage}</p>
+      <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">
+        Make sure your Google Sheet is published to web (File → Share → Publish to web)
+      </p>
     </div>
   `;
 }
