@@ -107,8 +107,8 @@ body {
 }
 
 .sort-btn {
-  padding: 0.5rem 0.875rem;
-  min-height: 44px;
+  padding: 0.375rem 0.875rem;
+  min-height: 36px;
   font-family: var(--font-body);
   font-size: 0.8125rem;
   font-weight: 500;
@@ -175,8 +175,8 @@ body {
   display: flex;
   align-items: center;
   gap: 0.375rem;
-  padding: 0.5rem 0.875rem;
-  min-height: 44px;
+  padding: 0.375rem 0.875rem;
+  min-height: 36px;
   font-family: var(--font-body);
   font-size: 0.8125rem;
   font-weight: 500;
