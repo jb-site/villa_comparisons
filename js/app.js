@@ -25,6 +25,7 @@ const CONFIG = {
 let villasData = [];
 let currentSortMode = 'rating';
 let currentSortReversed = false;
+let activeFilters = new Set(); // Stores active filter keys like 'heated_pool', 'walk_beach'
 
 // ==========================================================================
 // GOOGLE SHEETS PARSING
@@ -129,6 +130,9 @@ function buildVillaObject(headers, values) {
   const villa = {};
   const links = [];
 
+  // Define boolean columns for proper type conversion
+  const booleanColumns = ['excluded', 'heated_pool', 'walk_beach'];
+
   // Map basic fields
   headers.forEach((header, index) => {
     const value = values[index] || '';
@@ -152,7 +156,12 @@ function buildVillaObject(headers, values) {
     } else if (!header.startsWith('link_') || !header.endsWith('_url')) {
       // Add non-link fields directly
       if (value) {
-        villa[header] = value;
+        // Convert boolean columns to actual booleans
+        if (booleanColumns.includes(header)) {
+          villa[header] = value === 'TRUE' || value === 'true' || value === true;
+        } else {
+          villa[header] = value;
+        }
       }
     }
   });
@@ -264,23 +273,57 @@ function showError(message = '') {
 function renderVillas() {
   const grid = document.querySelector('.villas-grid');
 
-  // Filter out excluded villas
-  const activeVillas = villasData.filter(villa => !villa.excluded);
+  // Step 1: Filter out excluded villas
+  let activeVillas = villasData.filter(villa => !villa.excluded);
+
+  // Step 2: Apply active filters (AND logic)
+  activeVillas = applyFilters(activeVillas);
 
   if (activeVillas.length === 0) {
-    grid.innerHTML = '<div class="loading-state"><p>No villas found.</p></div>';
+    grid.innerHTML = '<div class="loading-state"><p>No villas match the selected filters.</p></div>';
     return;
   }
 
-  // Sort villas based on current mode
+  // Step 3: Sort villas based on current mode
   const sortedVillas = sortVillas(activeVillas, currentSortMode, currentSortReversed);
 
-  // Render based on sort mode
+  // Step 4: Render based on sort mode
   if (currentSortMode === 'area') {
     grid.innerHTML = renderVillasGroupedByArea(sortedVillas);
   } else {
     grid.innerHTML = sortedVillas.map((villa, index) => createVillaCard(villa, index)).join('');
   }
+}
+
+/**
+ * Apply active filters to villa list
+ * Uses AND logic - villa must match ALL active filters
+ * @param {Array} villas - Array of villa objects
+ * @returns {Array} Filtered villa array
+ */
+function applyFilters(villas) {
+  if (activeFilters.size === 0) {
+    return villas; // No filters active, return all villas
+  }
+
+  return villas.filter(villa => {
+    // Check each active filter
+    for (const filterKey of activeFilters) {
+      // Filter is ON - only show villas where this property is TRUE
+      const filterValue = villa[filterKey];
+
+      // Parse as boolean (handles "TRUE", "true", true)
+      const isTrue = filterValue === true ||
+                     filterValue === 'TRUE' ||
+                     filterValue === 'true';
+
+      if (!isTrue) {
+        return false; // Villa doesn't match this filter
+      }
+    }
+
+    return true; // Villa matches all active filters
+  });
 }
 
 function createVillaCard(villa, index) {
@@ -423,6 +466,54 @@ function renderVillasGroupedByArea(villas) {
   return html.join('');
 }
 
+// ==========================================================================
+// FILTER CONTROLS
+// ==========================================================================
+
+/**
+ * Toggle a filter on/off
+ * @param {string} filterKey - The filter to toggle (e.g., 'heated_pool')
+ */
+function toggleFilter(filterKey) {
+  if (activeFilters.has(filterKey)) {
+    activeFilters.delete(filterKey);
+  } else {
+    activeFilters.add(filterKey);
+  }
+
+  updateFilterButtons();
+  renderVillas();
+}
+
+/**
+ * Update filter button active states
+ */
+function updateFilterButtons() {
+  const filterButtons = document.querySelectorAll('.filter-btn');
+
+  filterButtons.forEach(btn => {
+    const filterKey = btn.dataset.filter;
+    if (activeFilters.has(filterKey)) {
+      btn.classList.add('active');
+    } else {
+      btn.classList.remove('active');
+    }
+  });
+}
+
+/**
+ * Initialize filter controls event listeners
+ */
+function initializeFilterControls() {
+  const filterButtons = document.querySelectorAll('.filter-btn');
+
+  filterButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      const filterKey = this.dataset.filter;
+      toggleFilter(filterKey);
+    });
+  });
+}
 
 // ==========================================================================
 // INTERACTIONS
@@ -565,6 +656,7 @@ function initializeSortControls() {
 document.addEventListener('DOMContentLoaded', () => {
   loadData().then(() => {
     initializeSortControls();
+    initializeFilterControls();
     // Initialize the area button with arrow
     updateSortButtons('area', false);
   });
